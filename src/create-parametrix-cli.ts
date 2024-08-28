@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+// create-parametrix-cli.ts
+
 import {
   intro,
   outro,
