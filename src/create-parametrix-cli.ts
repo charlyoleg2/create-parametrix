@@ -6,13 +6,24 @@ import pc from 'picocolors';
 import packag from '../package.json';
 import { setTimeout as sleep } from 'node:timers/promises';
 
+// first message
 const firstMsg =
 	`Create a new ${pc.italic('parametrix')} project` +
 	` with ${pc.italic(packag.name)} version ${pc.italic(packag.version)}`;
 
 console.log(firstMsg);
 
-async function main() {
+// get optional kernel-name from command-line
+const kernName = process.argv[2] || 'blabla';
+//console.log(`dbg016: kernName: ${kernName}`);
+
+const argN = process.argv.length - 2;
+if (argN > 1) {
+	console.log(`warn376: ${argN} arguments provided but only one supported!`);
+}
+
+// questions
+async function questions() {
 	console.log();
 	intro(pc.inverse(' create-my-app '));
 
@@ -61,11 +72,14 @@ async function main() {
 	await sleep(1000);
 }
 
-await main().catch(console.error);
+await questions().catch(console.error);
 
+const repoName = `parame${kernName}`;
+
+// last message
 const lastMsg = `
 Next steps:
-  1: ${pc.bold(pc.cyan(`cd parameBla`))}
+  1: ${pc.bold(pc.cyan(`cd ${repoName}`))}
   2: ${pc.bold(pc.cyan(`npm install`))}
   3: ${pc.bold(pc.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
   4: ${pc.bold(pc.cyan(`inkscape desiBla/src/svg/src_cube.svg`))} (optional)
@@ -76,3 +90,5 @@ Next steps:
 `;
 
 console.log(lastMsg);
+
+// end of script
