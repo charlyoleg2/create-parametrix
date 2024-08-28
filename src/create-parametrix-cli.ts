@@ -54,4 +54,18 @@ async function main() {
 	await sleep(1000);
 }
 
-main().catch(console.error);
+await main().catch(console.error);
+
+const lastMsg = `
+Next steps:
+  1: cd parameBla
+  2: npm install
+  3: ${color.bold(color.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
+  4: inkscape desiBla/src/svg/src_cube.svg
+  5: vim desiBla/src/cube.ts
+  6: npm run ci
+  7: npm run preview
+  8: npm run clean
+`;
+
+console.log(lastMsg);
