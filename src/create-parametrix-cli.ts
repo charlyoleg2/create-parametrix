@@ -3,11 +3,11 @@
 
 import { intro, outro, confirm, select, spinner, isCancel, cancel, text } from '@clack/prompts';
 import { setTimeout as sleep } from 'node:timers/promises';
-import color from 'picocolors';
+import pc from 'picocolors';
 
 async function main() {
 	console.log();
-	intro(color.inverse(' create-my-app '));
+	intro(pc.inverse(' create-my-app '));
 
 	const name = await text({
 		message: 'What is your name?',
@@ -60,7 +60,7 @@ const lastMsg = `
 Next steps:
   1: cd parameBla
   2: npm install
-  3: ${color.bold(color.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
+  3: ${pc.bold(pc.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
   4: inkscape desiBla/src/svg/src_cube.svg
   5: vim desiBla/src/cube.ts
   6: npm run ci
