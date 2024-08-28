@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // create-parametrix-cli.ts
 
-import { intro, outro, confirm, select, spinner, isCancel, cancel, text } from '@clack/prompts';
+import * as prom from '@clack/prompts';
 import pc from 'picocolors';
 import packag from '../package.json';
 import { setTimeout as sleep } from 'node:timers/promises';
@@ -22,64 +22,47 @@ if (argN > 1) {
 	console.log(`warn376: ${argN} arguments provided but only one supported!`);
 }
 
+// kernName with a capital first letter
+const kernName2 = kernName.charAt(0).toUpperCase() + kernName.slice(1);
+
 // questions
-async function questions() {
-	console.log();
-	intro(pc.inverse(' create-my-app '));
-
-	const name = await text({
-		message: 'What is your name?',
-		placeholder: 'Anonymous'
-	});
-
-	if (isCancel(name)) {
-		cancel('Operation cancelled');
-		return process.exit(0);
+prom.intro(pc.inverse(' Questions for your new parametrix project!'));
+const pCfg = await prom.group(
+	{
+		repoName: () =>
+			prom.text({
+				message: 'What is the repository name?',
+				initialValue: `parame${kernName2}`
+				//placeholder: `parame${kernName2}`
+			}),
+		shouldContinue: () =>
+			prom.confirm({
+				message: 'Do you want to continue?'
+				//		}),
+				//	projectType: () => prom.select({
+				//		message: 'Pick a project type.',
+				//		options: [
+				//			{ value: 'ts', label: 'TypeScript' },
+				//			{ value: 'js', label: 'JavaScript' },
+				//			{ value: 'coffee', label: 'CoffeeScript', hint: 'oh no' }
+				//		]
+			})
+	},
+	{
+		onCancel: () => {
+			prom.cancel('Operation cancelled!');
+			process.exit(0);
+		}
 	}
+);
+prom.outro('Your new parametrix project will be created!');
 
-	const shouldContinue = await confirm({
-		message: 'Do you want to continue?'
-	});
-
-	if (isCancel(shouldContinue)) {
-		cancel('Operation cancelled');
-		return process.exit(0);
-	}
-
-	const projectType = await select({
-		message: 'Pick a project type.',
-		options: [
-			{ value: 'ts', label: 'TypeScript' },
-			{ value: 'js', label: 'JavaScript' },
-			{ value: 'coffee', label: 'CoffeeScript', hint: 'oh no' }
-		]
-	});
-
-	if (isCancel(projectType)) {
-		cancel('Operation cancelled');
-		return process.exit(0);
-	}
-
-	const s = spinner();
-	s.start('Installing via npm');
-
-	await sleep(2000);
-
-	s.stop('Installed via npm');
-
-	outro("You're all set!");
-
-	await sleep(1000);
-}
-
-await questions().catch(console.error);
-
-const repoName = `parame${kernName}`;
+await sleep(500);
 
 // last message
 const lastMsg = `
 Next steps:
-  1: ${pc.bold(pc.cyan(`cd ${repoName}`))}
+  1: ${pc.bold(pc.cyan(`cd ${pCfg.repoName}`))}
   2: ${pc.bold(pc.cyan(`npm install`))}
   3: ${pc.bold(pc.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
   4: ${pc.bold(pc.cyan(`inkscape desiBla/src/svg/src_cube.svg`))} (optional)
