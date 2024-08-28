@@ -2,8 +2,15 @@
 // create-parametrix-cli.ts
 
 import { intro, outro, confirm, select, spinner, isCancel, cancel, text } from '@clack/prompts';
-import { setTimeout as sleep } from 'node:timers/promises';
 import pc from 'picocolors';
+import packag from '../package.json';
+import { setTimeout as sleep } from 'node:timers/promises';
+
+const firstMsg =
+	`Create a new ${pc.italic('parametrix')} project` +
+	` with ${pc.italic(packag.name)} version ${pc.italic(packag.version)}`;
+
+console.log(firstMsg);
 
 async function main() {
 	console.log();
@@ -45,7 +52,7 @@ async function main() {
 	const s = spinner();
 	s.start('Installing via npm');
 
-	await sleep(3000);
+	await sleep(2000);
 
 	s.stop('Installed via npm');
 
@@ -58,14 +65,14 @@ await main().catch(console.error);
 
 const lastMsg = `
 Next steps:
-  1: cd parameBla
-  2: npm install
+  1: ${pc.bold(pc.cyan(`cd parameBla`))}
+  2: ${pc.bold(pc.cyan(`npm install`))}
   3: ${pc.bold(pc.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
-  4: inkscape desiBla/src/svg/src_cube.svg
-  5: vim desiBla/src/cube.ts
-  6: npm run ci
-  7: npm run preview
-  8: npm run clean
+  4: ${pc.bold(pc.cyan(`inkscape desiBla/src/svg/src_cube.svg`))} (optional)
+  5: ${pc.bold(pc.cyan(`vim desiBla/src/cube.ts`))} (optional)
+  6: ${pc.bold(pc.cyan(`npm run ci`))}
+  7: ${pc.bold(pc.cyan(`npm run preview`))}
+  8: ${pc.bold(pc.cyan(`npm run clean`))}
 `;
 
 console.log(lastMsg);
