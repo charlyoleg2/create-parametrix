@@ -38,14 +38,15 @@ const pCfg = await prom.group(
 		shouldContinue: () =>
 			prom.confirm({
 				message: 'Do you want to continue?'
-				//		}),
-				//	projectType: () => prom.select({
-				//		message: 'Pick a project type.',
-				//		options: [
-				//			{ value: 'ts', label: 'TypeScript' },
-				//			{ value: 'js', label: 'JavaScript' },
-				//			{ value: 'coffee', label: 'CoffeeScript', hint: 'oh no' }
-				//		]
+			}),
+		projectType: () =>
+			prom.select({
+				message: 'Pick a project type.',
+				options: [
+					{ value: 'ts' as unknown as void, label: 'TypeScript' },
+					{ value: 'js' as unknown as void, label: 'JavaScript' },
+					{ value: 'coffee' as unknown as void, label: 'CoffeeScript', hint: 'oh no' }
+				]
 			})
 	},
 	{
