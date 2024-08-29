@@ -29,10 +29,10 @@ Usage
 
 ```bash
 npm create parametrix@latest
-npm create parametrix@latest 07
-npm init parametrix@latest 07
-npm exec create-parametrix@latest 07
-npx create-parametrix@latest 07
+npm create parametrix@latest Sam08
+npm init parametrix@latest Sam08
+npm exec create-parametrix@latest Sam08
+npx create-parametrix@latest Sam08
 ```
 
 Dev
