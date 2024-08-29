@@ -61,16 +61,21 @@ prom.outro('Your new parametrix project will be created!');
 await sleep(500);
 
 // last message
+function styl(str: string): string {
+	const rStr = pc.bold(pc.cyan(str));
+	return rStr;
+}
+
 const lastMsg = `
 Next steps:
-  1: ${pc.bold(pc.cyan(`cd ${pCfg.repoName}`))}
-  2: ${pc.bold(pc.cyan(`npm install`))}
-  3: ${pc.bold(pc.cyan('git init && git add -A && git commit -m "Initial commit"'))} (optional)
-  4: ${pc.bold(pc.cyan(`inkscape desiBla/src/svg/src_cube.svg`))} (optional)
-  5: ${pc.bold(pc.cyan(`vim desiBla/src/cube.ts`))} (optional)
-  6: ${pc.bold(pc.cyan(`npm run ci`))}
-  7: ${pc.bold(pc.cyan(`npm run preview`))}
-  8: ${pc.bold(pc.cyan(`npm run clean`))}
+  1: ${styl(`cd ${pCfg.repoName}`)}
+  2: ${styl(`npm install`)}
+  3: ${styl('git init && git add -A && git commit -m "Initial commit"')} (optional)
+  4: ${styl(`inkscape desiBla/src/svg/src_cube.svg`)} (optional)
+  5: ${styl(`vim desiBla/src/cube.ts`)} (optional)
+  6: ${styl(`npm run ci`)}
+  7: ${styl(`npm run preview`)}
+  8: ${styl(`npm run clean`)} (optional)
 `;
 
 console.log(lastMsg);
