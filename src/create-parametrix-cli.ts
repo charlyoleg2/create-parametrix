@@ -26,7 +26,8 @@ if (argN > 1) {
 const kernName2 = kernName.charAt(0).toUpperCase() + kernName.slice(1);
 
 // questions
-prom.intro(pc.inverse(' Questions for your new parametrix project!'));
+prom.intro(pc.inverse(' Your new parametrix project '));
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 const pCfg = await prom.group(
 	{
 		repoName: () =>
@@ -51,12 +52,13 @@ const pCfg = await prom.group(
 	},
 	{
 		onCancel: () => {
-			prom.cancel('Operation cancelled!');
+			prom.cancel('Operation aborted!');
 			process.exit(0);
 		}
 	}
 );
-prom.outro('Your new parametrix project will be created!');
+/* eslint-enable @typescript-eslint/no-invalid-void-type */
+prom.outro('Your new parametrix project will be boilerplated!');
 
 await sleep(500);
 
@@ -66,8 +68,7 @@ function styl(str: string): string {
 	return rStr;
 }
 
-const lastMsg = `
-Next steps:
+const lastMsg = `Next steps:
   1: ${styl(`cd ${pCfg.repoName}`)}
   2: ${styl(`npm install`)}
   3: ${styl('git init && git add -A && git commit -m "Initial commit"')} (optional)
