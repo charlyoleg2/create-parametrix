@@ -9,13 +9,15 @@ import type { tCfgObj, tResp } from './create-parametrix-common';
 
 async function oneFile(onePath: string, cfgObj: tCfgObj): Promise<void> {
 	try {
-		const fileIn = new URL(`../template/${onePath}.handlebars`, import.meta.url);
+		const onePathIn = Handlebars.compile(onePath)({ libName: 'desiAbc', designName: 'myBox' });
+		const onePathOut = Handlebars.compile(onePath)(cfgObj);
+		const fileIn = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
 		const fileStr1 = await readFile(fileIn, { encoding: 'utf8' });
 		//console.log(fileStr1);
-		const template = Handlebars.compile(fileStr1);
-		const fileStr2 = template(cfgObj);
+		const templateStr = Handlebars.compile(fileStr1);
+		const fileStr2 = templateStr(cfgObj);
 		//console.log(fileStr2);
-		const outPath = `tmp/${cfgObj.repoName}/${onePath}`;
+		const outPath = `tmp/${cfgObj.repoName}/${onePathOut}`;
 		const outDir = dirname(outPath);
 		try {
 			await access(outDir);
@@ -40,6 +42,8 @@ async function generate_boirlerplate(cfgObj: tCfgObj): Promise<tResp> {
   design name      : ${cfgObj.designName}
   boilerplate size : ${cfgObj.boilerplateSize}`);
 	oneFile('package.json', cfgObj);
+	oneFile('{{libName}}/src/voila.ts', cfgObj);
+	oneFile('{{libName}}/src/{{designName}}.ts', cfgObj);
 	await sleep(500);
 	const rResp: tResp = {
 		inkscape: `inkscape ${cfgObj.libName}/src/svg/src_${cfgObj.designName}.svg`,
