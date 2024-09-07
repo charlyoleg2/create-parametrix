@@ -1,7 +1,8 @@
 // create-parametrix-api.ts
 
 import { setTimeout as sleep } from 'node:timers/promises';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, access, mkdir } from 'node:fs/promises';
+import { dirname } from 'path';
 import Handlebars from 'handlebars';
 
 interface tCfgObj {
@@ -19,7 +20,18 @@ async function oneFile(onePath: string, cfgObj: tCfgObj): Promise<void> {
 		const template = Handlebars.compile(fileStr1);
 		const fileStr2 = template(cfgObj);
 		//console.log(fileStr2);
-		await writeFile(`tmp/${onePath}`, fileStr2);
+		const outPath = `tmp/${cfgObj.repoName}/${onePath}`;
+		const outDir = dirname(outPath);
+		try {
+			await access(outDir);
+		} catch (err) {
+			console.log(`create the directory ${outDir}`);
+			//console.log(err);
+			if (err) {
+				await mkdir(outDir, { recursive: true });
+			}
+		}
+		await writeFile(outPath, fileStr2);
 	} catch (err) {
 		console.log(`err213: error while generating file ${onePath}`);
 		console.error(err);
@@ -38,11 +50,11 @@ async function generate_boirlerplate(
 		designName: designName,
 		boilerplateSize: boilerplateSize
 	};
-	console.log(`boilerplate with
- repository name  : ${cfgObj.repoName}
- library name     : ${cfgObj.libName}
- design name      : ${cfgObj.designName}
- boilerplate size : ${cfgObj.boilerplateSize}`);
+	console.log(`Boilerplate with:
+  repository name  : ${cfgObj.repoName}
+  library name     : ${cfgObj.libName}
+  design name      : ${cfgObj.designName}
+  boilerplate size : ${cfgObj.boilerplateSize}`);
 	oneFile('package.json', cfgObj);
 	await sleep(500);
 }
