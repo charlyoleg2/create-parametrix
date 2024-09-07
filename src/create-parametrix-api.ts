@@ -15,10 +15,10 @@ async function oneFile(onePath: string, cfgObj: tCfgObj): Promise<void> {
 	try {
 		const fileIn = new URL(`../template/${onePath}.handlebars`, import.meta.url);
 		const fileStr1 = await readFile(fileIn, { encoding: 'utf8' });
-		console.log(fileStr1);
+		//console.log(fileStr1);
 		const template = Handlebars.compile(fileStr1);
 		const fileStr2 = template(cfgObj);
-		console.log(fileStr2);
+		//console.log(fileStr2);
 		await writeFile(`tmp/${onePath}`, fileStr2);
 	} catch (err) {
 		console.log(`err213: error while generating file ${onePath}`);
@@ -39,10 +39,10 @@ async function generate_boirlerplate(
 		boilerplateSize: boilerplateSize
 	};
 	console.log(`boilerplate with
-repository name: ${cfgObj.repoName}
-library name: ${cfgObj.libName}
-design name: ${cfgObj.designName}
-boilerplate size: ${cfgObj.boilerplateSize}`);
+ repository name  : ${cfgObj.repoName}
+ library name     : ${cfgObj.libName}
+ design name      : ${cfgObj.designName}
+ boilerplate size : ${cfgObj.boilerplateSize}`);
 	oneFile('package.json', cfgObj);
 	await sleep(500);
 }
