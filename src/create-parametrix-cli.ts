@@ -55,7 +55,7 @@ const pCfg = await prom.group(
 		//	}),
 		boilerplateSize: () =>
 			prom.select({
-				message: 'Pick a project type.',
+				message: 'Pick a boilerplate type.',
 				options: [
 					{
 						value: 'boilerplateS' as unknown as void,
