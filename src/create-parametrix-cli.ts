@@ -109,7 +109,8 @@ function styl(str: string): string {
 
 //  4: ${styl(`inkscape ${pCfg.libName}/src/svg/src_${pCfg.designName}.svg`)} (optional)
 //  5: ${styl(`vim ${pCfg.libName}/src/${pCfg.designName}.ts`)} (optional)
-const lastMsg = `Next steps:
+const lastMsg = `
+Next steps:
   1: ${styl(`cd ${pCfg.repoName}`)}
   2: ${styl(`npm install`)}
   3: ${styl('git init && git add -A && git commit -m "Initial commit"')} (optional)

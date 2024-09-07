@@ -20,7 +20,7 @@ async function oneFile(onePath: string, cfgObj: tCfgObj): Promise<void> {
 		try {
 			await access(outDir);
 		} catch (err) {
-			console.log(`create the directory ${outDir}`);
+			//console.log(`create the directory ${outDir}`);
 			//console.log(err);
 			if (err) {
 				await mkdir(outDir, { recursive: true });
