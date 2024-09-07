@@ -17,7 +17,14 @@ async function oneFile(onePath: string, cfgObj: tCfgObj): Promise<void> {
 		const templateStr = Handlebars.compile(fileStr1);
 		const fileStr2 = templateStr(cfgObj);
 		//console.log(fileStr2);
-		const outPath = `tmp/${cfgObj.repoName}/${onePathOut}`;
+		let preDir = './';
+		const scriptDir = new URL('', import.meta.url).toString();
+		//console.log(`dbg832: scriptDir: ${scriptDir}`);
+		const regex = new RegExp('/node_modules/');
+		if (!regex.test(scriptDir)) {
+			preDir = './tmp/';
+		}
+		const outPath = `${preDir}${cfgObj.repoName}/${onePathOut}`;
 		const outDir = dirname(outPath);
 		try {
 			await access(outDir);
