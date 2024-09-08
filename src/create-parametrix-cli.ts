@@ -35,7 +35,6 @@ const kernName2 = kernName.charAt(0).toUpperCase() + kernName.slice(1);
 
 // questions
 prom.intro(pc.inverse(' Your new parametrix project '));
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 const pCfg = await prom.group(
 	{
 		repoName: () =>
@@ -89,7 +88,6 @@ const pCfg = await prom.group(
 		}
 	}
 );
-/* eslint-enable @typescript-eslint/no-invalid-void-type */
 prom.outro('Your new parametrix project will be boilerplated!');
 
 const cfgObj: tCfgObj = {
