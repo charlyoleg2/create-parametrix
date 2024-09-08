@@ -46,8 +46,7 @@ async function generate_boirlerplate(cfgObj: tCfgObj): Promise<tResp> {
 	console.log(`Boilerplate with:
   repository name  : ${cfgObj.repoName}
   library name     : ${cfgObj.libName}
-  design name      : ${cfgObj.designName}
-  boilerplate size : ${cfgObj.boilerplateSize}`);
+  design name      : ${cfgObj.designName}`);
 	const cfgObj2: tCfgObj2 = {
 		repoName: cfgObj.repoName,
 		RepoName: cfgObj.repoName.charAt(0).toUpperCase() + cfgObj.repoName.slice(1),

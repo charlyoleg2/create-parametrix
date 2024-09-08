@@ -4,7 +4,7 @@ interface tCfgObj {
 	repoName: string;
 	libName: string;
 	designName: string;
-	boilerplateSize: string;
+	//boilerplateSize: string;
 }
 interface tCfgObj2 {
 	repoName: string;
@@ -19,9 +19,9 @@ interface tResp {
 	vim: string;
 }
 
-const c_boilerplateSize_S = 'boilerplateS';
-const c_boilerplateSize_M = 'boilerplateM';
-const c_boilerplateSize_L = 'boilerplateL';
+//const c_boilerplateSize_S = 'boilerplateS';
+//const c_boilerplateSize_M = 'boilerplateM';
+//const c_boilerplateSize_L = 'boilerplateL';
 
 export type { tCfgObj, tCfgObj2, tResp };
-export { c_boilerplateSize_S, c_boilerplateSize_M, c_boilerplateSize_L };
+//export { c_boilerplateSize_S, c_boilerplateSize_M, c_boilerplateSize_L };

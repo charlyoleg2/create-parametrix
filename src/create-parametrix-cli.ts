@@ -8,11 +8,11 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { generate_boirlerplate } from './create-parametrix-api';
 //import type { tCfgObj, tResp } from './create-parametrix-common';
 import type { tCfgObj } from './create-parametrix-common';
-import {
-	c_boilerplateSize_S,
-	c_boilerplateSize_M,
-	c_boilerplateSize_L
-} from './create-parametrix-common';
+//import {
+//	c_boilerplateSize_S,
+//	c_boilerplateSize_M,
+//	c_boilerplateSize_L
+//} from './create-parametrix-common';
 
 // first message
 const firstMsg =
@@ -55,32 +55,32 @@ const pCfg = await prom.group(
 				message: 'Name of the (first) design?',
 				initialValue: `myBox`
 				//placeholder: `myBox`
-			}),
+			})
 		//shouldContinue: () =>
 		//	prom.confirm({
 		//		message: 'Do you want to continue?'
 		//	}),
-		boilerplateSize: () =>
-			prom.select({
-				message: 'Pick a boilerplate type.',
-				options: [
-					{
-						value: c_boilerplateSize_S as unknown as void,
-						label: 'simplest boilerplate',
-						hint: 'up to 10 designs'
-					},
-					{
-						value: c_boilerplateSize_M as unknown as void,
-						label: 'boilerplate with sub-directories',
-						hint: 'up to 50 designs'
-					},
-					{
-						value: c_boilerplateSize_L as unknown as void,
-						label: 'boilerplare with sub-libraries and sub-directories',
-						hint: 'more than 50 designs'
-					}
-				]
-			})
+		//boilerplateSize: () =>
+		//	prom.select({
+		//		message: 'Pick a boilerplate type.',
+		//		options: [
+		//			{
+		//				value: c_boilerplateSize_S as unknown as void,
+		//				label: 'simplest boilerplate',
+		//				hint: 'up to 10 designs'
+		//			},
+		//			{
+		//				value: c_boilerplateSize_M as unknown as void,
+		//				label: 'boilerplate with sub-directories',
+		//				hint: 'up to 50 designs'
+		//			},
+		//			{
+		//				value: c_boilerplateSize_L as unknown as void,
+		//				label: 'boilerplare with sub-libraries and sub-directories',
+		//				hint: 'more than 50 designs'
+		//			}
+		//		]
+		//	})
 	},
 	{
 		onCancel: () => {
@@ -95,8 +95,8 @@ prom.outro('Your new parametrix project will be boilerplated!');
 const cfgObj: tCfgObj = {
 	repoName: pCfg.repoName,
 	libName: pCfg.libName,
-	designName: pCfg.designName,
-	boilerplateSize: pCfg.boilerplateSize
+	designName: pCfg.designName
+	//boilerplateSize: pCfg.boilerplateSize
 };
 const resp = await generate_boirlerplate(cfgObj);
 await sleep(100);
