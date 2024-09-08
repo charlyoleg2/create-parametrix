@@ -1,6 +1,81 @@
 {
 	"name": "{{repoName}}",
 	"version": "0.1.0",
-	"description": "The mono-repo for the parametrixcdesign library {{libName}}",
+	"description": "The mono-repo for {{libName}}, {{libName}}-cli, {{libName}}-ui and {{libName}}-uis",
 	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
+	},
+	"homepage": "https://MYNAME.github.io/{{repoName}}/",
+	"author": "MYNAME",
+	"license": "ISC",
+	"keywords": [
+		"parametrix",
+		"3D",
+		"CAD"
+	],
+	"type": "module",
+	"workspaces": [
+		"desi78",
+		"paxApps/*"
+	],
+	"paxApps": {
+		"colorBg": "SeaGreen",
+		"colorTitle": "Orange",
+		"libs": [
+			"desi78"
+		]
+	},
+	"scripts": {
+		"degit_paxApps": "degit https://github.com/MYNAME/parame_paxApps/paxApps paxApps",
+		"del_package_lock": "shx rm -f package-lock.json",
+		"patch_paxApps": "patch -p0 -Nt < scr/patchPaxApps.patch",
+		"clean_patch": "shx rm -f paxApps/desiXY-cli/package.json.rej paxApps/desiXY-uis/package.json.rej",
+		"cp_readme_for_cli": "shx cp ./README.md paxApps/desiXY-cli/",
+		"cp_readme_for_uis": "shx cp ./README.md paxApps/desiXY-uis/",
+		"quick_install_paxApps": "run-s degit_paxApps patch_paxApps clean_patch cp_readme_for_cli cp_readme_for_uis",
+		"install_paxApps": "run-s quick_install_paxApps del_package_lock",
+		"clean_paxApps": "shx rm -fr paxApps",
+		"desi78:dev": "npm -w desi78 run dev",
+		"desi78:ci": "npm -w desi78 run ci",
+		"desi78:svgo": "npm -w desi78 run svgo",
+		"desi78:clean": "npm -w desi78 run clean",
+		"desi78:version": "npm -w desi78 version patch",
+		"desi78:publish": "npm -w desi78 publish --provenance",
+		"paxScr:brun": "npm -w paxScr run brun",
+		"paxScr:clean": "npm -w paxScr run clean",
+		"desiXY-ui:dev": "npm -w desiXY-ui run dev",
+		"desiXY-ui:build": "npm -w desiXY-ui run build",
+		"desiXY-ui:clean": "npm -w desiXY-ui run clean",
+		"desiXY-ui:preview": "npm -w desiXY-ui run preview",
+		"desiXY-cli:build": "npm -w desi78-cli run build",
+		"desiXY-cli:run": "npm -w desi78-cli run run",
+		"desiXY-cli:clean": "npm -w desi78-cli run clean",
+		"desiXY-cli:version": "npm -w desi78-cli version patch",
+		"desiXY-cli:publish": "npm -w desi78-cli publish --provenance",
+		"desiXY-uis:build": "npm -w desi78-uis run build",
+		"desiXY-uis:copy_public": "npm -w desi78-uis run copy_public",
+		"desiXY-uis:run": "npm -w desi78-uis run run",
+		"desiXY-uis:clean": "npm -w desi78-uis run clean",
+		"desiXY-uis:version": "npm -w desi78-uis version patch",
+		"desiXY-uis:publish": "npm -w desi78-uis publish --provenance",
+		"dev": "run-p desi78:dev desiXY-ui:dev",
+		"ci": "run-s desi78:ci paxScr:brun desiXY-ui:build desiXY-cli:build desiXY-uis:build desiXY-uis:copy_public",
+		"svgo": "run-s desi78:svgo",
+		"clean-root": "shx rm -fr tmp output output2",
+		"clean": "run-s clean-root clean_patch desi78:clean paxScr:clean desiXY-ui:clean desiXY-cli:clean desiXY-uis:clean",
+		"preview": "run-s desiXY-ui:preview",
+		"run-uis": "run-s desiXY-uis:run",
+		"run-cli": "run-s desiXY-cli:run",
+		"msgVersion": "echo 'warn064: Upgrade manually the version-numbers in scr/patchPaxApps.patch'",
+		"versions": "run-s desi78:version desiXY-cli:version desiXY-uis:version msgVersion",
+		"gh-publish": "run-s desi78:publish desiXY-cli:publish desiXY-uis:publish",
+		"ls-workspaces": "npm -ws exec -c pwd"
+	},
+	"devDependencies": {
+		"degit": "^2.8.4",
+		"npm-run-all": "^4.1.5",
+		"shx": "^0.3.4"
+	}
 }
