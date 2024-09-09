@@ -1,0 +1,78 @@
+{
+	"name": "desi78",
+	"version": "0.5.23",
+	"description": "A collection of designs for architecture",
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/charlyoleg2/parame78.git"
+	},
+	"homepage": "https://charlyoleg2.github.io/parame78/",
+	"author": "charlyoleg",
+	"license": "ISC",
+	"keywords": [
+		"parametrix",
+		"3D",
+		"CAD"
+	],
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.map",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"tsup": {
+		"entry": [
+			"src/index.ts"
+		],
+		"format": "esm",
+		"splitting": false,
+		"dts": true,
+		"sourcemap": true,
+		"clean": true
+	},
+	"scripts": {
+		"dev": "tsup --watch",
+		"build": "tsup",
+		"check": "tsc --noEmit",
+		"pretty": "prettier --check .",
+		"format": "prettier --write .",
+		"lint": "eslint .",
+		"test:unit": "vitest",
+		"test:unit:once": "vitest --run",
+		"ci": "run-s check build pretty lint test:unit:once svgo",
+		"svgo1": "svgo --config ./svgo.config.js -f src/facade/svg -o dist/pgdsvg/",
+		"svgo2": "svgo --config ./svgo.config.js -f src/menuiserie/svg -o dist/pgdsvg/",
+		"svgo3": "svgo --config ./svgo.config.js -f src/chaudronnerie/svg -o dist/pgdsvg/",
+		"svgo": "run-s svgo1 svgo2 svgo3",
+		"browserBundleA": "esbuild src/facade/door.ts --bundle --format=esm --outfile=dist2/door.js",
+		"browserBundleAll": "esbuild dist/index.js --bundle --format=esm --outfile=dist2/desi78.js",
+		"clean": "shx rm -fr dist dist2 node_modules"
+	},
+	"dependencies": {
+		"geometrix": "^0.5.46"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.8.0",
+		"@types/eslint__js": "^8.42.3",
+		"@types/node": "^22.1.0",
+		"esbuild": "^0.23.0",
+		"eslint": "^9.8.0",
+		"eslint-config-prettier": "^9.1.0",
+		"npm-run-all": "^4.1.5",
+		"prettier": "^3.3.3",
+		"shx": "^0.3.4",
+		"svgo": "^3.3.2",
+		"tsup": "^8.2.4",
+		"typescript": "^5.5.4",
+		"typescript-eslint": "^8.0.0",
+		"vitest": "^2.0.5"
+	}
+}
