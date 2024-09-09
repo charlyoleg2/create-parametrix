@@ -52,7 +52,7 @@ const template_file_list = [
 	'pkg/{{libName}}-ui/vite.config.ts',
 	'pkg/{{libName}}-ui/README.md',
 	'pkg/{{libName}}-ui/package.json',
-	//'pkg/{{libName}}-ui/static/favicon.png',
+	'pkg/{{libName}}-ui/static/favicon.png',
 	'pkg/{{libName}}-ui/static/favicon.svg',
 	'pkg/{{libName}}-ui/src/app.d.ts',
 	'pkg/{{libName}}-ui/src/app.html',

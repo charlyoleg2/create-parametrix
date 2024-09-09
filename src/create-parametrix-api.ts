@@ -2,7 +2,8 @@
 
 import { setTimeout as sleep } from 'node:timers/promises';
 import { readFile, writeFile, access, mkdir } from 'node:fs/promises';
-import { dirname } from 'path';
+import { Buffer } from 'node:buffer';
+import { dirname, extname } from 'path';
 import Handlebars from 'handlebars';
 import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
 import { firstLetterCapital } from './create-parametrix-common';
@@ -27,20 +28,27 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		// try to read the file.handlebars. If it doesn"t exist, just copy the file
 		const fileIn1 = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
 		const fileIn2 = new URL(`../template/${onePathIn}`, import.meta.url);
-		let fileStr1 = '';
+		let fileStr2 = '';
+		let fileBuffer2 = Buffer.alloc(0);
+		let fileBin = false;
 		try {
 			await access(fileIn1);
-			fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
+			const fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
+			//console.log(fileStr1);
+			// do the conversion
+			const templateStr = Handlebars.compile(fileStr1);
+			fileStr2 = templateStr(cfg2);
 		} catch (err) {
 			//console.log(err);
 			if (err) {
-				fileStr1 = await readFile(fileIn2, { encoding: 'utf8' });
+				if (extname(fileIn2.toString()) === '.png') {
+					fileBin = true;
+					fileBuffer2 = await readFile(fileIn2);
+				} else {
+					fileStr2 = await readFile(fileIn2, { encoding: 'utf8' });
+				}
 			}
 		}
-		//console.log(fileStr1);
-		// do the conversion
-		const templateStr = Handlebars.compile(fileStr1);
-		const fileStr2 = templateStr(cfg2);
 		//console.log(fileStr2);
 		const outPath = `${preDir}/${cfg2.repoName}/${onePathOut}`;
 		// create missing output directory
@@ -54,8 +62,12 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 				await mkdir(outDir, { recursive: true });
 			}
 		}
-		// write the output file
-		await writeFile(outPath, fileStr2);
+		// write the output file\
+		if (fileBin) {
+			await writeFile(outPath, fileBuffer2);
+		} else {
+			await writeFile(outPath, fileStr2);
+		}
 	} catch (err) {
 		console.log(`err213: error while generating file ${onePath}`);
 		console.error(err);
