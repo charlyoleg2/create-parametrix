@@ -19,4 +19,10 @@ interface tResp {
 	vim: string;
 }
 
+function firstLetterCapital(str: string): string {
+	const rStr = str.charAt(0).toUpperCase() + str.slice(1);
+	return rStr;
+}
+
 export type { tCfg1, tCfg2, tResp };
+export { firstLetterCapital };

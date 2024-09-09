@@ -5,6 +5,7 @@ import { readFile, writeFile, access, mkdir } from 'node:fs/promises';
 import { dirname } from 'path';
 import Handlebars from 'handlebars';
 import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
+import { firstLetterCapital } from './create-parametrix-common';
 import { template_file_list } from './create-parametrix-list';
 
 async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
@@ -65,11 +66,11 @@ async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
   design name      : ${cfg1.designName}`);
 	const cfg2: tCfg2 = {
 		repoName: cfg1.repoName,
-		RepoName: cfg1.repoName.charAt(0).toUpperCase() + cfg1.repoName.slice(1),
+		RepoName: firstLetterCapital(cfg1.repoName),
 		libName: cfg1.libName,
-		LibName: cfg1.libName.charAt(0).toUpperCase() + cfg1.libName.slice(1),
+		LibName: firstLetterCapital(cfg1.libName),
 		designName: cfg1.designName,
-		DesignName: cfg1.designName.charAt(0).toUpperCase() + cfg1.designName.slice(1)
+		DesignName: firstLetterCapital(cfg1.designName)
 	};
 	for (const fpath of template_file_list) {
 		oneFile(fpath, cfg2);

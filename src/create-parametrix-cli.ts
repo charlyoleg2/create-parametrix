@@ -8,6 +8,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { generate_boirlerplate } from './create-parametrix-api';
 //import type { tCfg1, tResp } from './create-parametrix-common';
 import type { tCfg1 } from './create-parametrix-common';
+import { firstLetterCapital } from './create-parametrix-common';
 
 // first message
 const firstMsg =
@@ -26,7 +27,7 @@ if (argN > 1) {
 }
 
 // kernName with a capital first letter
-const kernName2 = kernName.charAt(0).toUpperCase() + kernName.slice(1);
+const kernName2 = firstLetterCapital(kernName);
 
 // questions
 prom.intro(pc.inverse(' Your new parametrix project '));
