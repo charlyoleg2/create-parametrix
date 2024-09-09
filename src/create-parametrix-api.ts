@@ -5,7 +5,7 @@ import { readFile, writeFile, access, mkdir } from 'node:fs/promises';
 import { dirname } from 'path';
 import Handlebars from 'handlebars';
 import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
-//import { c_boilerplateSize_S, c_boilerplateSize_M, c_boilerplateSize_L } from './create-parametrix-common';
+import { template_file_list } from './create-parametrix-list';
 
 async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
 	try {
@@ -71,14 +71,10 @@ async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
 		designName: cfg1.designName,
 		DesignName: cfg1.designName.charAt(0).toUpperCase() + cfg1.designName.slice(1)
 	};
-	oneFile('.editorconfig', cfg2);
-	oneFile('.gitignore', cfg2);
-	oneFile('.npmrc', cfg2);
-	oneFile('package.json', cfg2);
-	oneFile('README.md', cfg2);
-	oneFile('pkg/{{libName}}/src/myGroup1/voila.ts', cfg2);
-	oneFile('pkg/{{libName}}/src/myGroup1/{{designName}}.ts', cfg2);
-	await sleep(500);
+	for (const fpath of template_file_list) {
+		oneFile(fpath, cfg2);
+	}
+	await sleep(100);
 	const rResp: tResp = {
 		inkscape: `inkscape ${cfg1.libName}/src/svg/src_${cfg1.designName}.svg`,
 		vim: `vim ${cfg1.libName}/src/${cfg1.designName}.ts`
