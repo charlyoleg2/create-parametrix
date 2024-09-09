@@ -1,12 +1,12 @@
 // create-parametrix-common.ts
 
-interface tCfgObj {
+interface tCfg1 {
 	repoName: string;
 	libName: string;
 	designName: string;
 	//boilerplateSize: string;
 }
-interface tCfgObj2 {
+interface tCfg2 {
 	repoName: string;
 	RepoName: string;
 	libName: string;
@@ -19,9 +19,4 @@ interface tResp {
 	vim: string;
 }
 
-//const c_boilerplateSize_S = 'boilerplateS';
-//const c_boilerplateSize_M = 'boilerplateM';
-//const c_boilerplateSize_L = 'boilerplateL';
-
-export type { tCfgObj, tCfgObj2, tResp };
-//export { c_boilerplateSize_S, c_boilerplateSize_M, c_boilerplateSize_L };
+export type { tCfg1, tCfg2, tResp };

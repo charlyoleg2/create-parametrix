@@ -4,19 +4,33 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { readFile, writeFile, access, mkdir } from 'node:fs/promises';
 import { dirname } from 'path';
 import Handlebars from 'handlebars';
-import type { tCfgObj, tCfgObj2, tResp } from './create-parametrix-common';
+import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
 //import { c_boilerplateSize_S, c_boilerplateSize_M, c_boilerplateSize_L } from './create-parametrix-common';
 
-async function oneFile(onePath: string, cfgObj: tCfgObj2): Promise<void> {
+async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
 	try {
+		// compute read and write path
 		const onePathIn = Handlebars.compile(onePath)({ libName: 'desiAbc', designName: 'myBox' });
-		const onePathOut = Handlebars.compile(onePath)(cfgObj);
-		const fileIn = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
-		const fileStr1 = await readFile(fileIn, { encoding: 'utf8' });
+		const onePathOut = Handlebars.compile(onePath)(cfg2);
+		// try to read the file.handlebars. If it doesn"t exist, just copy the file
+		const fileIn1 = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
+		const fileIn2 = new URL(`../template/${onePathIn}`, import.meta.url);
+		let fileStr1 = '';
+		try {
+			await access(fileIn1);
+			fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
+		} catch (err) {
+			//console.log(err);
+			if (err) {
+				fileStr1 = await readFile(fileIn2, { encoding: 'utf8' });
+			}
+		}
 		//console.log(fileStr1);
+		// do the conversion
 		const templateStr = Handlebars.compile(fileStr1);
-		const fileStr2 = templateStr(cfgObj);
+		const fileStr2 = templateStr(cfg2);
 		//console.log(fileStr2);
+		// prefix of output path
 		let preDir = '.';
 		const scriptDir = new URL('', import.meta.url).toString();
 		//console.log(`dbg832: scriptDir: ${scriptDir}`);
@@ -24,7 +38,8 @@ async function oneFile(onePath: string, cfgObj: tCfgObj2): Promise<void> {
 		if (!regex.test(scriptDir)) {
 			preDir = './tmp';
 		}
-		const outPath = `${preDir}/${cfgObj.repoName}/${onePathOut}`;
+		const outPath = `${preDir}/${cfg2.repoName}/${onePathOut}`;
+		// create missing output directory
 		const outDir = dirname(outPath);
 		try {
 			await access(outDir);
@@ -35,6 +50,7 @@ async function oneFile(onePath: string, cfgObj: tCfgObj2): Promise<void> {
 				await mkdir(outDir, { recursive: true });
 			}
 		}
+		// write the output file
 		await writeFile(outPath, fileStr2);
 	} catch (err) {
 		console.log(`err213: error while generating file ${onePath}`);
@@ -42,30 +58,30 @@ async function oneFile(onePath: string, cfgObj: tCfgObj2): Promise<void> {
 	}
 }
 
-async function generate_boirlerplate(cfgObj: tCfgObj): Promise<tResp> {
+async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
 	console.log(`Boilerplate with:
-  repository name  : ${cfgObj.repoName}
-  library name     : ${cfgObj.libName}
-  design name      : ${cfgObj.designName}`);
-	const cfgObj2: tCfgObj2 = {
-		repoName: cfgObj.repoName,
-		RepoName: cfgObj.repoName.charAt(0).toUpperCase() + cfgObj.repoName.slice(1),
-		libName: cfgObj.libName,
-		LibName: cfgObj.libName.charAt(0).toUpperCase() + cfgObj.libName.slice(1),
-		designName: cfgObj.designName,
-		DesignName: cfgObj.designName.charAt(0).toUpperCase() + cfgObj.designName.slice(1)
+  repository name  : ${cfg1.repoName}
+  library name     : ${cfg1.libName}
+  design name      : ${cfg1.designName}`);
+	const cfg2: tCfg2 = {
+		repoName: cfg1.repoName,
+		RepoName: cfg1.repoName.charAt(0).toUpperCase() + cfg1.repoName.slice(1),
+		libName: cfg1.libName,
+		LibName: cfg1.libName.charAt(0).toUpperCase() + cfg1.libName.slice(1),
+		designName: cfg1.designName,
+		DesignName: cfg1.designName.charAt(0).toUpperCase() + cfg1.designName.slice(1)
 	};
-	oneFile('.editorconfig', cfgObj2);
-	oneFile('.gitignore', cfgObj2);
-	oneFile('.npmrc', cfgObj2);
-	oneFile('package.json', cfgObj2);
-	oneFile('README.md', cfgObj2);
-	oneFile('pkg/{{libName}}/src/myGroup1/voila.ts', cfgObj2);
-	oneFile('pkg/{{libName}}/src/myGroup1/{{designName}}.ts', cfgObj2);
+	oneFile('.editorconfig', cfg2);
+	oneFile('.gitignore', cfg2);
+	oneFile('.npmrc', cfg2);
+	oneFile('package.json', cfg2);
+	oneFile('README.md', cfg2);
+	oneFile('pkg/{{libName}}/src/myGroup1/voila.ts', cfg2);
+	oneFile('pkg/{{libName}}/src/myGroup1/{{designName}}.ts', cfg2);
 	await sleep(500);
 	const rResp: tResp = {
-		inkscape: `inkscape ${cfgObj.libName}/src/svg/src_${cfgObj.designName}.svg`,
-		vim: `vim ${cfgObj.libName}/src/${cfgObj.designName}.ts`
+		inkscape: `inkscape ${cfg1.libName}/src/svg/src_${cfg1.designName}.svg`,
+		vim: `vim ${cfg1.libName}/src/${cfg1.designName}.ts`
 	};
 	return rResp;
 }
