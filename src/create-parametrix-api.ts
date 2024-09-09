@@ -8,7 +8,18 @@ import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
 import { firstLetterCapital } from './create-parametrix-common';
 import { template_file_list } from './create-parametrix-list';
 
-async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
+function prefixOutputPath() {
+	let rPreDir = '.';
+	const scriptDir = new URL('', import.meta.url).toString();
+	//console.log(`dbg832: scriptDir: ${scriptDir}`);
+	const regex = new RegExp('/node_modules/');
+	if (!regex.test(scriptDir)) {
+		rPreDir = './tmp';
+	}
+	return rPreDir;
+}
+
+async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<void> {
 	try {
 		// compute read and write path
 		const onePathIn = Handlebars.compile(onePath)({ libName: 'desiAbc', designName: 'myBox' });
@@ -31,14 +42,6 @@ async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
 		const templateStr = Handlebars.compile(fileStr1);
 		const fileStr2 = templateStr(cfg2);
 		//console.log(fileStr2);
-		// prefix of output path
-		let preDir = '.';
-		const scriptDir = new URL('', import.meta.url).toString();
-		//console.log(`dbg832: scriptDir: ${scriptDir}`);
-		const regex = new RegExp('/node_modules/');
-		if (!regex.test(scriptDir)) {
-			preDir = './tmp';
-		}
 		const outPath = `${preDir}/${cfg2.repoName}/${onePathOut}`;
 		// create missing output directory
 		const outDir = dirname(outPath);
@@ -73,9 +76,11 @@ async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
 		designName: cfg1.designName,
 		DesignName: firstLetterCapital(cfg1.designName)
 	};
+	const preDir = prefixOutputPath();
 	for (const fpath of template_file_list) {
-		oneFile(fpath, cfg2);
+		await oneFile(fpath, cfg2, preDir);
 	}
+	console.log(`generate ${template_file_list.length} files in ${preDir}/${cfg1.repoName}/`);
 	await sleep(100);
 	const rResp: tResp = {
 		inkscape: `inkscape ${cfg1.libName}/src/svg/src_${cfg1.designName}.svg`,
