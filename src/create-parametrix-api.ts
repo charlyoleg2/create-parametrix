@@ -56,6 +56,7 @@ async function oneFile(onePath: string, cfg2: tCfg2): Promise<void> {
 	} catch (err) {
 		console.log(`err213: error while generating file ${onePath}`);
 		console.error(err);
+		throw `err214: error with path ${onePath}`;
 	}
 }
 
