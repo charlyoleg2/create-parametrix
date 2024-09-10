@@ -2,19 +2,15 @@
 	import { strDesiNames, repoToHomepage } from '$lib/general';
 	import { base } from '$app/paths';
 	import { version_details } from 'geometrix';
-	import desiPackage from '../../package.json';
+	import appPackage from '../../package.json';
 	import topPackage from '../../../../package.json';
-	import versionJson from '$lib/versions.json';
 
-	const detailed_versions = version_details(desiPackage);
+	const detailed_versions = version_details(appPackage);
 	const desiNames = strDesiNames(topPackage.paxApps.libs);
-	const versionNames = Object.keys(versionJson);
-	type tVersions = Record<string, string>;
-	const versionJson2 = versionJson as tVersions;
 </script>
 
 <header>
-	<h1>Welcome to DesiXY-UI of {desiNames}</h1>
+	<h1>Welcome to {{LibName}}-UI of {desiNames}</h1>
 	<h6>
 		Display the designs of <a href={topPackage.homepage}>{topPackage.name}</a>
 		powered by the framework
@@ -33,14 +29,10 @@
 		<code>
 			<a href={repoToHomepage(topPackage.repository.url)}>{topPackage.name}</a> version {topPackage.version}<br
 			/>
-			{#each versionNames as oneN}
-				{oneN} : {versionJson2[oneN]}<br />
-			{/each}
 		</code>
 	</article>
 	<article>
-		<h3>desiXY-ui</h3>
-		<a href="https://github.com/charlyoleg2/parame_paxApps">desiXY-ui</a>, the generic User
+		<h3>{{libName}}-ui</h3>
 		Inteface built with
 		<a href="https://www.npmjs.com/package/geometrix">geometrix</a> and
 		<a href="https://www.npmjs.com/package/geomui">geomui</a>.<br />
@@ -53,16 +45,15 @@
 </footer>
 
 <style lang="scss">
-	@use '$lib/gen_colors.scss';
 
 	:global(body) {
 		font-family: 'Courier New', 'Helvetica', 'Arial', 'Verdana';
 		margin: 0;
 		padding: 0;
-		background-color: gen_colors.$colorBg;
+		background-color: DarkCyan;
 	}
 	h1 {
-		color: gen_colors.$colorTitle;
+		color: aquamarine;
 		margin: 1rem;
 		margin-bottom: 0.2rem;
 	}
@@ -104,6 +95,5 @@
 		margin: 1rem;
 		margin-top: 5rem;
 		margin-bottom: 5rem;
-		background-color: var(--colorBg2);
 	}
 </style>

@@ -1,14 +1,14 @@
 {
-	"name": "desiXY-ui",
-	"description": "sveltekit-ui for desiXY",
-	"version": "0.5.2",
+	"name": "{{libName}}-ui",
+	"description": "sveltekit-ui for {{libName}}",
+	"version": "0.1.0",
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/charlyoleg2/parame_paxApps.git"
+		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
 	},
-	"homepage": "https://charlyoleg2.github.io/parame_paxApps/",
-	"author": "charlyoleg",
+	"homepage": "https://MYNAME.github.io/{{repoName}}/",
+	"author": "MYNAME",
 	"license": "ISC",
 	"keywords": [
 		"parametrix",
@@ -28,10 +28,10 @@
 		"ci": "run-s build lint check test:unit:once",
 		"format": "prettier --write .",
 		"github-pages-fix": "touch build/.nojekyll",
-		"clean": "shx rm -fr .svelte-kit build node_modules static/pgdsvg src/lib/designList.ts src/lib/gen_colors.scss src/lib/versions.json"
+		"clean": "shx rm -fr .svelte-kit build node_modules static/pgdsvg"
 	},
 	"dependencies": {
-		"desi78": "^0.5.23",
+		"{{libName}}": "^0.1.0",
 		"geometrix": "^0.5.48",
 		"geomui": "^0.5.50"
 	},
