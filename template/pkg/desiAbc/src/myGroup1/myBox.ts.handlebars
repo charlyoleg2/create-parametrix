@@ -27,7 +27,7 @@ import {
 } from 'geometrix';
 
 const pDef: tParamDef = {
-	partName: 'voila',
+	partName: '{{designName}}',
 	params: [
 		//pNumber(name, unit, init, min, max, step)
 		pNumber('H1', 'mm', 40, 1, 4000, 1),
@@ -37,10 +37,10 @@ const pDef: tParamDef = {
 		pNumber('Rc', 'mm', 10, 0, 400, 1)
 	],
 	paramSvg: {
-		H1: 'voila_face.svg',
-		H2: 'voila_face.svg',
-		radius: 'voila_face.svg',
-		Rc: 'voila_face.svg'
+		H1: '{{designName}}_face.svg',
+		H2: '{{designName}}_face.svg',
+		radius: '{{designName}}_face.svg',
+		Rc: '{{designName}}_face.svg'
 	},
 	sim: {
 		tMax: 180,
@@ -68,7 +68,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		figFace.addMainOI(face1);
 		// final figure list
 		rGeome.fig = {
-			faceVoila: figFace
+			face{{DesignName}}: figFace
 		};
 		// volume
 		const designName = rGeome.partName;
@@ -76,7 +76,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			extrudes: [
 				{
 					outName: `subpax_${designName}_top`,
-					face: `${designName}_faceVoila`,
+					face: `${designName}_face{{DesignName}}`,
 					extrudeMethod: EExtrude.eLinearOrtho,
 					length: 10,
 					rotate: [0, 0, 0],
@@ -94,7 +94,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		// sub-design
 		rGeome.sub = {};
 		// finalize
-		rGeome.logstr += 'voila drawn successfully!\n';
+		rGeome.logstr += '{{designName}} drawn successfully!\n';
 		rGeome.calcErr = false;
 	} catch (emsg) {
 		rGeome.logstr += emsg as string;
@@ -103,11 +103,11 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 	return rGeome;
 }
 
-const voilaDef: tPageDef = {
-	pTitle: 'voila',
+const {{designName}}Def: tPageDef = {
+	pTitle: '{{designName}}',
 	pDescription: 'A simple design for testing exports',
 	pDef: pDef,
 	pGeom: pGeom
 };
 
-export { voilaDef };
+export { {{designName}}Def };

@@ -1,14 +1,14 @@
 {
-	"name": "desi78",
-	"version": "0.5.23",
-	"description": "A collection of designs for architecture",
+	"name": "{{libName}}",
+	"version": "0.1.0",
+	"description": "A collection of designs",
 	"private": false,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/charlyoleg2/parame78.git"
+		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
 	},
-	"homepage": "https://charlyoleg2.github.io/parame78/",
-	"author": "charlyoleg",
+	"homepage": "https://MYNAME.github.io/{{repoName}}/",
+	"author": "MYNAME",
 	"license": "ISC",
 	"keywords": [
 		"parametrix",
@@ -48,13 +48,9 @@
 		"test:unit": "vitest",
 		"test:unit:once": "vitest --run",
 		"ci": "run-s check build pretty lint test:unit:once svgo",
-		"svgo1": "svgo --config ./svgo.config.js -f src/facade/svg -o dist/pgdsvg/",
-		"svgo2": "svgo --config ./svgo.config.js -f src/menuiserie/svg -o dist/pgdsvg/",
-		"svgo3": "svgo --config ./svgo.config.js -f src/chaudronnerie/svg -o dist/pgdsvg/",
-		"svgo": "run-s svgo1 svgo2 svgo3",
-		"browserBundleA": "esbuild src/facade/door.ts --bundle --format=esm --outfile=dist2/door.js",
-		"browserBundleAll": "esbuild dist/index.js --bundle --format=esm --outfile=dist2/desi78.js",
-		"clean": "shx rm -fr dist dist2 node_modules"
+		"svgo1": "svgo --config ./svgo.config.js -f src/myGroup1/svg -o dist/pgdsvg/",
+		"svgo": "run-s svgo1",
+		"clean": "shx rm -fr dist"
 	},
 	"dependencies": {
 		"geometrix": "^0.5.46"
