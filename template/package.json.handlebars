@@ -42,7 +42,7 @@
 		"{{libName}}-uis:version": "npm -w {{libName}}-uis version patch",
 		"{{libName}}-uis:publish": "npm -w {{libName}}-uis publish --provenance",
 		"dev": "run-p {{libName}}:dev {{libName}}-ui:dev",
-		"ci": "run-s {{libName}}:ci {{libName}}-ui:ci {{libName}}-cli:ci {{libName}}-uis:ci {{libName}}-uis:copy_public",
+		"ci": "run-s {{libName}}:ci {{libName}}-ui:ci {{libName}}-cli:ci {{libName}}-uis:ci",
 		"svgo": "run-s {{libName}}:svgo",
 		"clean-root": "shx rm -fr tmp output output2",
 		"clean": "run-s clean-root {{libName}}:clean {{libName}}-ui:clean {{libName}}-cli:clean {{libName}}-uis:clean",
