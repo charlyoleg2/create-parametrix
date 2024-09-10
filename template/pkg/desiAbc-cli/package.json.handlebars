@@ -1,14 +1,14 @@
 {
-	"name": "desi78-cli",
-	"description": "The cli-frontend for desi78",
-	"version": "0.1.18",
+	"name": "{{libName}}-cli",
+	"description": "The cli-frontend for {{libName}}",
+	"version": "0.1.0",
 	"private": false,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/charlyoleg2/parame78.git"
+		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
 	},
-	"homepage": "https://charlyoleg2.github.io/parame78/",
-	"author": "charlyoleg",
+	"homepage": "https://MYNAME.github.io/{{repoName}}}/",
+	"author": "MYNAME",
 	"license": "ISC",
 	"keywords": [
 		"parametrix",
@@ -18,11 +18,11 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/desiXY-cli.d.ts",
-			"default": "./dist/desiXY-cli.js"
+			"types": "./dist/{{libName}}-cli.d.ts",
+			"default": "./dist/{{libName}}-cli.js"
 		}
 	},
-	"bin": "./dist/desiXY-cli.js",
+	"bin": "./dist/{{libName}}-cli.js",
 	"files": [
 		"dist/",
 		"!dist/**/*.d.ts",
@@ -32,7 +32,7 @@
 	],
 	"tsup": {
 		"entry": [
-			"src/desiXY-cli.ts"
+			"src/{{libName}}-cli.ts"
 		],
 		"format": "esm",
 		"splitting": false,
@@ -51,11 +51,11 @@
 		"test:unit:once": "vitest --run",
 		"test:bats": "bats test/test1.bats",
 		"ci": "run-s check build pretty lint test:unit:once test:bats",
-		"run": "dist/desiXY-cli.js",
-		"clean": "shx rm -fr build dist node_modules output src/designList.ts src/versions.json"
+		"run": "dist/{{libName}}-cli.js",
+		"clean": "shx rm -fr build dist"
 	},
 	"dependencies": {
-		"desi78": "^0.5.23",
+		"{{libName}}": "^0.1.0",
 		"geomcli": "^0.5.51",
 		"geometrix": "^0.5.48"
 	},

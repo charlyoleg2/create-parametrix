@@ -4,5 +4,3 @@ build/
 # vitest creates node_modules for the results.json
 node_modules/
 output/
-/src/designList.ts
-/src/versions.json
