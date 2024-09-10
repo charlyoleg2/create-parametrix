@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { strDesiNames, repoToHomepage } from '$lib/general';
+	import { repoToHomepage } from '$lib/general';
 	import { base } from '$app/paths';
 	import { version_details } from 'geometrix';
 	import appPackage from '../../package.json';
 	import topPackage from '../../../../package.json';
 
 	const detailed_versions = version_details(appPackage);
-	const desiNames = strDesiNames(topPackage.paxApps.libs);
 </script>
 
 <header>
-	<h1>Welcome to {{LibName}}-UI of {desiNames}</h1>
+	<h1>Welcome to {{LibName}}-UI</h1>
 	<h6>
 		Display the designs of <a href={topPackage.homepage}>{topPackage.name}</a>
 		powered by the framework
