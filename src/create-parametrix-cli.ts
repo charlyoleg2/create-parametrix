@@ -2,7 +2,7 @@
 // create-parametrix-cli.ts
 
 import * as prom from '@clack/prompts';
-import pc from 'picocolors';
+import chalk from 'chalk';
 import packag from '../package.json';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { generate_boirlerplate } from './create-parametrix-api';
@@ -12,8 +12,8 @@ import { firstLetterCapital } from './create-parametrix-common';
 
 // first message
 const firstMsg =
-	`Create a new ${pc.italic('parametrix')} project` +
-	` with ${pc.italic(packag.name)} version ${pc.italic(packag.version)}`;
+	`Create a new ${chalk.italic('parametrix')} project` +
+	` with ${chalk.italic(packag.name)} version ${chalk.italic(packag.version)}`;
 
 console.log(firstMsg);
 
@@ -30,7 +30,7 @@ if (argN > 1) {
 const kernName2 = firstLetterCapital(kernName);
 
 // questions
-prom.intro(pc.inverse(' Your new parametrix project '));
+prom.intro(chalk.inverse(' Your new parametrix project '));
 const pCfg = await prom.group(
 	{
 		repoName: () =>
@@ -72,7 +72,7 @@ await sleep(100);
 
 // last message
 function styl(str: string): string {
-	const rStr = pc.bold(pc.cyan(str));
+	const rStr = chalk.bold.cyan(str);
 	return rStr;
 }
 
