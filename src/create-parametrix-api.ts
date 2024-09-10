@@ -57,11 +57,16 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		let fileBuffer2 = Buffer.alloc(0);
 		try {
 			await access(fileIn1);
-			const fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
-			//console.log(fileStr1);
-			// do the conversion
-			const templateStr = Handlebars.compile(fileStr1);
-			fileStr2 = templateStr(cfg2);
+			try {
+				const fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
+				//console.log(fileStr1);
+				// do the conversion
+				const templateStr = Handlebars.compile(fileStr1);
+				fileStr2 = templateStr(cfg2);
+			} catch (err) {
+				console.log(`err392: error while processing ${fileIn1.toString()}`);
+				console.log(err);
+			}
 		} catch (err) {
 			//console.log(err);
 			if (err) {
