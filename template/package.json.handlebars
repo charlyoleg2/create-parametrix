@@ -45,7 +45,7 @@
 		"ci": "run-s {{libName}}:ci {{libName}}-ui:ci {{libName}}-cli:ci {{libName}}-uis:ci {{libName}}-uis:copy_public",
 		"svgo": "run-s {{libName}}:svgo",
 		"clean-root": "shx rm -fr tmp output output2",
-		"clean": "run-s clean-root clean_patch {{libName}}:clean paxScr:clean {{libName}}-ui:clean {{libName}}-cli:clean {{libName}}-uis:clean",
+		"clean": "run-s clean-root {{libName}}:clean {{libName}}-ui:clean {{libName}}-cli:clean {{libName}}-uis:clean",
 		"preview": "run-s {{libName}}-ui:preview",
 		"run-uis": "run-s {{libName}}-uis:run",
 		"run-cli": "run-s {{libName}}-cli:run",
