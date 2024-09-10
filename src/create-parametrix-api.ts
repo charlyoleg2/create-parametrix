@@ -9,7 +9,7 @@ import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
 import { firstLetterCapital } from './create-parametrix-common';
 import { template_file_list } from './create-parametrix-list';
 
-function prefixOutputPath() {
+function prefixOutputPath(): string {
 	let rPreDir = '.';
 	const scriptDir = new URL('', import.meta.url).toString();
 	//console.log(`dbg832: scriptDir: ${scriptDir}`);
@@ -20,6 +20,30 @@ function prefixOutputPath() {
 	return rPreDir;
 }
 
+async function createMissingDir(outPath: string): Promise<void> {
+	// create missing output directory
+	const outDir = dirname(outPath);
+	try {
+		await access(outDir);
+	} catch (err) {
+		//console.log(`create the directory ${outDir}`);
+		//console.log(err);
+		if (err) {
+			await mkdir(outDir, { recursive: true });
+		}
+	}
+}
+
+function isFileBinary(fpath: URL): boolean {
+	const binaryExts = new Set(['.png']);
+	const infileExt = extname(fpath.toString());
+	const rBool = binaryExts.has(infileExt);
+	//if (rBool) {
+	//	console.log(`dbg732: file ${fpath.toString()} is a binary file`);
+	//}
+	return rBool;
+}
+
 async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<void> {
 	try {
 		// compute read and write path
@@ -28,9 +52,9 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		// try to read the file.handlebars. If it doesn"t exist, just copy the file
 		const fileIn1 = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
 		const fileIn2 = new URL(`../template/${onePathIn}`, import.meta.url);
+		let fileBin = false;
 		let fileStr2 = '';
 		let fileBuffer2 = Buffer.alloc(0);
-		let fileBin = false;
 		try {
 			await access(fileIn1);
 			const fileStr1 = await readFile(fileIn1, { encoding: 'utf8' });
@@ -41,7 +65,7 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		} catch (err) {
 			//console.log(err);
 			if (err) {
-				if (extname(fileIn2.toString()) === '.png') {
+				if (isFileBinary(fileIn2)) {
 					fileBin = true;
 					fileBuffer2 = await readFile(fileIn2);
 				} else {
@@ -51,17 +75,7 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		}
 		//console.log(fileStr2);
 		const outPath = `${preDir}/${cfg2.repoName}/${onePathOut}`;
-		// create missing output directory
-		const outDir = dirname(outPath);
-		try {
-			await access(outDir);
-		} catch (err) {
-			//console.log(`create the directory ${outDir}`);
-			//console.log(err);
-			if (err) {
-				await mkdir(outDir, { recursive: true });
-			}
-		}
+		await createMissingDir(outPath);
 		// write the output file\
 		if (fileBin) {
 			await writeFile(outPath, fileBuffer2);
