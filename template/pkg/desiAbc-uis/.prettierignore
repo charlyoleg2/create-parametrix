@@ -1,4 +1,5 @@
-# .prettierignore of desiXY-uis
+# .prettierignore
+
 node_modules
 build
 dist

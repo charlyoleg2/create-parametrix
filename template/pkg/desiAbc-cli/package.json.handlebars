@@ -52,7 +52,7 @@
 		"test:bats": "bats test/test1.bats",
 		"ci": "run-s check build pretty lint test:unit:once test:bats",
 		"run": "dist/{{libName}}-cli.js",
-		"clean": "shx rm -fr build dist"
+		"clean": "shx rm -fr build dist node_modules"
 	},
 	"dependencies": {
 		"{{libName}}": "^0.1.0",

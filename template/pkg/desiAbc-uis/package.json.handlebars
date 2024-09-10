@@ -1,14 +1,14 @@
 {
-	"name": "desi78-uis",
-	"description": "mini-server for the desi78-ui",
-	"version": "0.1.18",
+	"name": "{{libName}}-uis",
+	"description": "mini-server for the web-app {{libName}}-ui",
+	"version": "0.1.0",
 	"private": false,
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/charlyoleg2/parame78.git"
+		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
 	},
-	"homepage": "https://charlyoleg2.github.io/parame78/",
-	"author": "charlyoleg",
+	"homepage": "https://MYNAME.github.io/{{repoName}}/",
+	"author": "MYNAME",
 	"license": "ISC",
 	"keywords": [
 		"parametrix",
@@ -18,11 +18,11 @@
 	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/desiXY-uis.d.ts",
-			"default": "./dist/desiXY-uis.js"
+			"types": "./dist/{{libName}}-uis.d.ts",
+			"default": "./dist/{{libName}}-uis.js"
 		}
 	},
-	"bin": "dist/desiXY-uis.js",
+	"bin": "dist/{{libName}}-uis.js",
 	"files": [
 		"dist/",
 		"!dist/**/*.d.ts",
@@ -35,7 +35,7 @@
 	},
 	"tsup": {
 		"entry": [
-			"src/desiXY-uis.ts"
+			"src/{{libName}}-uis.ts"
 		],
 		"format": "esm",
 		"splitting": false,
@@ -61,12 +61,12 @@
 		"test:unit": "vitest",
 		"test:unit:once": "vitest --run",
 		"clean_public": "shx rm -fr dist/public",
-		"copy_ui": "shx cp -r ../desiXY-ui/build dist/public",
+		"copy_ui": "shx cp -r ../{{libName}}-ui/build dist/public",
 		"checkCopy": "ls -l dist/public/index.html",
 		"copy_public": "run-s clean_public copy_ui checkCopy",
 		"ci": "run-s check build pretty lint test:unit:once copy_public",
-		"run": "node dist/desiXY-uis.js",
-		"run-help": "node dist/desiXY-uis.js --help",
+		"run": "node dist/{{libName}}-uis.js",
+		"run-help": "node dist/{{libName}}-uis.js --help",
 		"clean": "shx rm -fr node_modules build dist tmp"
 	},
 	"dependencies": {

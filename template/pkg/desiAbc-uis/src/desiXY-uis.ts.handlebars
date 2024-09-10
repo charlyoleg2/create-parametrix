@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// desiXY-uis.ts
+// {{libName}}-uis.ts
 
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
@@ -101,6 +101,6 @@ async function mini_cli(argv: string[]) {
 	await mini_server(args.directory, args.browser, args.port);
 }
 
-//console.log('desiXY-uis says Hello!');
+//console.log('{{libName}}-uis says Hello!');
 await mini_cli(process.argv);
-//console.log('desiXY-uis says Bye!');
+//console.log('{{libName}}-uis says Bye!');

@@ -50,7 +50,7 @@
 		"ci": "run-s check build pretty lint test:unit:once svgo",
 		"svgo1": "svgo --config ./svgo.config.js -f src/myGroup1/svg -o dist/pgdsvg/",
 		"svgo": "run-s svgo1",
-		"clean": "shx rm -fr dist"
+		"clean": "shx rm -fr dist node_modules"
 	},
 	"dependencies": {
 		"geometrix": "^0.5.46"

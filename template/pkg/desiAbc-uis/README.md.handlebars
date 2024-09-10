@@ -1,0 +1,55 @@
+{{libName}}-uis
+===================
+
+
+Presentation
+------------
+
+*{{libName}}-uis* is the static web-server of the web-app *{{libName}}-ui*.
+
+
+Requirements
+------------
+
+- [node](https://nodejs.org) > 20.10.0
+- [npm](https://docs.npmjs.com/cli) > 10.1.0
+
+
+Installation
+------------
+
+```bash
+npm i -D {{libName}}-uis
+```
+
+
+Usage
+-----
+
+```bash
+npx {{libName}}-uis
+npx {{libName}}-uis --help
+```
+
+
+Usage without installation
+--------------------------
+
+```bash
+npx {{libName}}-uis
+npx --package={{libName}}-uis {{libName}}-uis
+npx --package={{libName}}-uis {{libName}}-uis --help
+```
+
+
+Development
+-----------
+
+```bash
+git clone https://github.com/MYNAME/{{repoName}}
+cd {{repoName}}
+npm install
+npm run ci
+npm -w {{libName}}-uis run run
+```
+
