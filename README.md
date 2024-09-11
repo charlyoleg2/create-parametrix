@@ -47,5 +47,14 @@ npm run run
 ```
 
 
+Publish a new release
+---------------------
+
+```bash
+npm version patch
+git push
+git push origin v0.5.6
+```
+
 
 
