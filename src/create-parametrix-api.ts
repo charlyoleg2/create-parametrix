@@ -39,8 +39,8 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		const onePathIn = Handlebars.compile(onePath)({ libName: 'desiAbc', designName: 'myBox' });
 		const onePathOut = Handlebars.compile(onePath)(cfg2);
 		// try to read the file.handlebars. If it doesn"t exist, just copy the file
-		const fileIn1 = new URL(`../template/${onePathIn}.handlebars`, import.meta.url);
-		const fileIn2 = new URL(`../template/${onePathIn}`, import.meta.url);
+		const fileIn1 = new URL(`./template/${onePathIn}.handlebars`, import.meta.url);
+		const fileIn2 = new URL(`./template/${onePathIn}`, import.meta.url);
 		let fileBin = false;
 		let fileStr2 = '';
 		let fileBuffer2 = Buffer.alloc(0);
