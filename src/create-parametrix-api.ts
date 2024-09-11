@@ -9,17 +9,6 @@ import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
 import { firstLetterCapital } from './create-parametrix-common';
 import { template_file_list } from './create-parametrix-list';
 
-function prefixOutputPath(): string {
-	let rPreDir = '.';
-	const scriptDir = new URL('', import.meta.url).toString();
-	//console.log(`dbg832: scriptDir: ${scriptDir}`);
-	const regex = new RegExp('/node_modules/');
-	if (!regex.test(scriptDir)) {
-		rPreDir = './tmp';
-	}
-	return rPreDir;
-}
-
 async function createMissingDir(outPath: string): Promise<void> {
 	// create missing output directory
 	const outDir = dirname(outPath);
@@ -94,7 +83,7 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 	}
 }
 
-async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
+async function generate_boirlerplate(cfg1: tCfg1, preDir: string): Promise<tResp> {
 	console.log(`Boilerplate with:
   repository name  : ${cfg1.repoName}
   library name     : ${cfg1.libName}
@@ -107,7 +96,6 @@ async function generate_boirlerplate(cfg1: tCfg1): Promise<tResp> {
 		designName: cfg1.designName,
 		DesignName: firstLetterCapital(cfg1.designName)
 	};
-	const preDir = prefixOutputPath();
 	for (const fpath of template_file_list) {
 		await oneFile(fpath, cfg2, preDir);
 	}

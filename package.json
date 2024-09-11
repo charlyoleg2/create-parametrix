@@ -36,6 +36,7 @@
 	"tsup": {
 		"entry": [
 			"src/create-parametrix-api.ts",
+			"src/create-parametrix-ref.ts",
 			"src/create-parametrix-cli.ts"
 		],
 		"format": "esm",
@@ -63,8 +64,11 @@
 		"test:unit:once": "vitest --run",
 		"ci": "run-s check build pretty lint test:unit:once",
 		"run": "dist/create-parametrix-cli.js",
+		"run:ref": "dist/create-parametrix-ref.js tmp2",
+		"run:diff": "diff -rq tmp tmp2",
+		"run:check": "run-s run:ref run:diff",
 		"clean:build": "shx rm -fr dist",
-		"clean:output": "shx rm -fr tmp",
+		"clean:output": "shx rm -fr tmp tmp2",
 		"clean": "run-s clean:build clean:output"
 	},
 	"dependencies": {

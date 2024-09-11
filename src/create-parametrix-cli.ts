@@ -8,7 +8,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { generate_boirlerplate } from './create-parametrix-api';
 //import type { tCfg1, tResp } from './create-parametrix-common';
 import type { tCfg1 } from './create-parametrix-common';
-import { firstLetterCapital } from './create-parametrix-common';
+import { firstLetterCapital, prefixOutputPath } from './create-parametrix-common';
 
 // first message
 const firstMsg =
@@ -67,7 +67,8 @@ const cfg1: tCfg1 = {
 	designName: pCfg.designName
 	//boilerplateSize: pCfg.boilerplateSize
 };
-const resp = await generate_boirlerplate(cfg1);
+const preDir = prefixOutputPath();
+const resp = await generate_boirlerplate(cfg1, preDir);
 await sleep(100);
 
 // last message
