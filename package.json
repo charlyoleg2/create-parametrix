@@ -71,6 +71,7 @@
 		"run:ref": "dist/create-parametrix-ref.js tmp2",
 		"run:diff": "diff -rq tmp tmp2",
 		"run:check": "run-s run:ref run:diff",
+		"cycle": "run-s clean ci run",
 		"clean:template": "shx rm -fr dist/template",
 		"clean:build": "shx rm -fr dist",
 		"clean:output": "shx rm -fr tmp tmp2",
