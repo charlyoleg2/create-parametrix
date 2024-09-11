@@ -26,7 +26,9 @@
 			"default": "./dist/create-parametrix-api.js"
 		}
 	},
-	"bin": "dist/create-parametrix-cli.js",
+	"bin": {
+		"create-parametrix": "dist/create-parametrix-cli.js"
+	},
 	"files": [
 		"dist/create-parametrix-cli.js",
 		"dist/template/",
