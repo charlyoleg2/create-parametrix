@@ -50,7 +50,9 @@
 		"ci": "run-s check build pretty lint test:unit:once svgo",
 		"svgo1": "svgo --config ./svgo.config.js -f src/myGroup1/svg -o dist/pgdsvg/",
 		"svgo": "run-s svgo1",
-		"clean": "shx rm -fr dist node_modules"
+		"browserBundleA": "esbuild src/myGroup1/{{designName}}.ts --bundle --format=esm --outfile=dist2/{{designName}}.js",
+		"browserBundleAll": "esbuild dist/index.js --bundle --format=esm --outfile=dist2/{{libName}}.js",
+		"clean": "shx rm -fr dist dist2 node_modules"
 	},
 	"dependencies": {
 		"geometrix": "^0.5.46"
