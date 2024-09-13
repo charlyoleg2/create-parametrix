@@ -2,8 +2,9 @@
 	import { repoToHomepage } from '$lib/general';
 	import { base } from '$app/paths';
 	import { version_details } from 'geometrix';
-	import appPackage from '../../package.json';
 	import topPackage from '../../../../package.json';
+	import libPackage from '../../../{{libName}}/package.json';
+	import appPackage from '../../package.json';
 
 	const detailed_versions = version_details(appPackage);
 </script>
@@ -11,8 +12,8 @@
 <header>
 	<h1>Welcome to {{LibName}}-UI</h1>
 	<h6>
-		Display the designs of <a href={topPackage.homepage}>{topPackage.name}</a>
-		powered by the framework
+		Display the designs of <a href={topPackage.homepage}>{libPackage.name}</a>. Powered by the
+		framework
 		<a href="https://charlyoleg2.github.io/parametrix/">parametrix</a>.
 	</h6>
 	<nav>
@@ -26,15 +27,14 @@
 	<article>
 		<h3>{topPackage.name}</h3>
 		<code>
-			<a href={repoToHomepage(topPackage.repository.url)}>{topPackage.name}</a> version {topPackage.version}<br
-			/>
+			<a href={repoToHomepage(topPackage.repository.url)}>{topPackage.name}</a> version {topPackage.version}
 		</code>
 	</article>
 	<article>
 		<h3>{{libName}}-ui</h3>
-		Inteface built with
+		Built with
 		<a href="https://www.npmjs.com/package/geometrix">geometrix</a> and
-		<a href="https://www.npmjs.com/package/geomui">geomui</a>.<br />
+		<a href="https://www.npmjs.com/package/geomui">geomui</a>.
 		<code>
 			{#each detailed_versions as dversion}
 				{dversion}<br />
