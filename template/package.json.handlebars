@@ -2,7 +2,7 @@
 	"name": "{{repoName}}",
 	"version": "0.1.0",
 	"description": "The mono-repo for {{libName}}, {{libName}}-cli, {{libName}}-ui and {{libName}}-uis",
-	"private": false,
+	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/MYNAME/{{repoName}}.git"
@@ -30,6 +30,7 @@
 		"{{libName}}-ui:ci": "npm -w {{libName}}-ui run ci",
 		"{{libName}}-ui:clean": "npm -w {{libName}}-ui run clean",
 		"{{libName}}-ui:preview": "npm -w {{libName}}-ui run preview",
+		"{{libName}}-ui:version": "npm -w {{libName}}-ui version patch",
 		"{{libName}}-cli:ci": "npm -w {{libName}}-cli run ci",
 		"{{libName}}-cli:run": "npm -w {{libName}}-cli run run",
 		"{{libName}}-cli:clean": "npm -w {{libName}}-cli run clean",
@@ -43,13 +44,15 @@
 		"{{libName}}-uis:publish": "npm -w {{libName}}-uis publish --provenance",
 		"dev": "run-p {{libName}}:dev {{libName}}-ui:dev",
 		"ci": "run-s {{libName}}:ci {{libName}}-ui:ci {{libName}}-cli:ci {{libName}}-uis:ci",
+		"ci2": "run-s {{libName}}:ci {{libName}}-ui:ci,
+		"ci3": "run-s {{libName}}:ci {{libName}}-cli:ci",
 		"svgo": "run-s {{libName}}:svgo",
 		"clean-root": "shx rm -fr tmp output output2",
 		"clean": "run-s clean-root {{libName}}:clean {{libName}}-ui:clean {{libName}}-cli:clean {{libName}}-uis:clean",
 		"preview": "run-s {{libName}}-ui:preview",
 		"run-uis": "run-s {{libName}}-uis:run",
 		"run-cli": "run-s {{libName}}-cli:run",
-		"versions": "run-s {{libName}}:version {{libName}}-cli:version {{libName}}-uis:version",
+		"versions": "run-s {{libName}}:version {{libName}}-ui:version {{libName}}-cli:version {{libName}}-uis:version",
 		"gh-publish": "run-s {{libName}}:publish {{libName}}-cli:publish {{libName}}-uis:publish",
 		"ls-workspaces": "npm -ws exec -c pwd"
 	},
