@@ -99,6 +99,7 @@ async function generate_boirlerplate(cfg1: tCfg1, preDir: string): Promise<tResp
 		DesignName: firstLetterCapital(cfg1.designName),
 		DesignNameUnderline: underline(cfg1.designName)
 	};
+	//console.log(`dbg102: RepoNameUnderline: ${cfg2.RepoNameUnderline}`);
 	for (const fpath of template_file_list) {
 		await oneFile(fpath, cfg2, preDir);
 	}
