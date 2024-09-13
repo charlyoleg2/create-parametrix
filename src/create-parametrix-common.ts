@@ -9,10 +9,13 @@ interface tCfg1 {
 interface tCfg2 {
 	repoName: string;
 	RepoName: string;
+	RepoNameUnderline: string;
 	libName: string;
 	LibName: string;
+	LibNameUnderline: string;
 	designName: string;
 	DesignName: string;
+	DesignNameUnderline: string;
 }
 interface tResp {
 	inkscape: string;
@@ -21,6 +24,12 @@ interface tResp {
 
 function firstLetterCapital(str: string): string {
 	const rStr = str.charAt(0).toUpperCase() + str.slice(1);
+	return rStr;
+}
+
+function underline(str: string): string {
+	const strLen = str.length;
+	const rStr = '='.repeat(strLen);
 	return rStr;
 }
 
@@ -36,4 +45,4 @@ function prefixOutputPath(): string {
 }
 
 export type { tCfg1, tCfg2, tResp };
-export { firstLetterCapital, prefixOutputPath };
+export { firstLetterCapital, underline, prefixOutputPath };

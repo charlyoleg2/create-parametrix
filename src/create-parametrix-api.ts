@@ -6,7 +6,7 @@ import { Buffer } from 'node:buffer';
 import { dirname, extname } from 'path';
 import Handlebars from 'handlebars';
 import type { tCfg1, tCfg2, tResp } from './create-parametrix-common';
-import { firstLetterCapital } from './create-parametrix-common';
+import { firstLetterCapital, underline } from './create-parametrix-common';
 import { template_file_list } from './create-parametrix-list';
 
 async function createMissingDir(outPath: string): Promise<void> {
@@ -91,10 +91,13 @@ async function generate_boirlerplate(cfg1: tCfg1, preDir: string): Promise<tResp
 	const cfg2: tCfg2 = {
 		repoName: cfg1.repoName,
 		RepoName: firstLetterCapital(cfg1.repoName),
+		RepoNameUnderline: underline(cfg1.repoName),
 		libName: cfg1.libName,
 		LibName: firstLetterCapital(cfg1.libName),
+		LibNameUnderline: underline(cfg1.libName),
 		designName: cfg1.designName,
-		DesignName: firstLetterCapital(cfg1.designName)
+		DesignName: firstLetterCapital(cfg1.designName),
+		DesignNameUnderline: underline(cfg1.designName)
 	};
 	for (const fpath of template_file_list) {
 		await oneFile(fpath, cfg2, preDir);
