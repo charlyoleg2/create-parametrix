@@ -45,7 +45,7 @@ const pDef: tParamDef = {
 		//pCheckbox(name, init)
 		pCheckbox('holes', true),
 		pNumber('D1', 'mm', 10, 1, 400, 1),
-		pNumber('D2', 'mm', 10, 1, 400, 1),
+		pNumber('D2', 'mm', 5, 1, 400, 1),
 		pSectionSeparator('corners'),
 		pNumber('Rc', 'mm', 10, 0, 400, 1)
 	],
@@ -136,8 +136,15 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 			return rCtr;
 		}
 		figSide.addMainOI([shapeU(param.L2)]);
+		if (param.holes) {
+			figSide.addSecond(ctrRectangle(-param.D1 / 2, 0, param.D1, param.H2));
+		}
 		// figFace
 		figFace.addMainO(shapeU(param.L1));
+		if (param.holes) {
+			figSide.addSecond(ctrRectangle(param.L1 / 2 - param.D1 / 2, 0, param.D1, param.H2));
+			figSide.addSecond(ctrRectangle(param.L1 / 2 + circleDelta - param.D2 / 2, 0, param.D2, param.H2));
+		}
 		// final figure list
 		rGeome.fig = {
 			faceBottom: figBottom,
