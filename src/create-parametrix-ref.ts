@@ -16,8 +16,8 @@ if (argN > 1) {
 	console.log(`warn376: ${argN} arguments provided but only one supported!`);
 }
 
-//const kernelName = 'Blable';
-const kernelName = '51';
+const kernelName = 'Blabla';
+//const kernelName = '51';
 const cfg1: tCfg1 = {
 	repoName: `parame${kernelName}`,
 	libName: `desi${kernelName}`,
