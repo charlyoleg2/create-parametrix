@@ -137,7 +137,8 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		}
 		figSide.addMainOI([shapeU(param.L2)]);
 		if (param.holes) {
-			figSide.addSecond(ctrRectangle(-param.D1 / 2, 0, param.D1, param.H2));
+			const x1 = param.L2 / 2 - param.D1 / 2;
+			figSide.addSecond(ctrRectangle(x1, 0, param.D1, param.H2));
 		}
 		// figFace
 		figFace.addMainO(shapeU(param.L1));
