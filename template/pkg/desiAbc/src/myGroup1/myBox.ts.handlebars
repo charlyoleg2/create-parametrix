@@ -109,8 +109,8 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		const ctrInt = ctrRectangle(param.W1, param.W1, L1b, L2b, Rcb);
 		const ctrsTop: tOuterInner = [ctrExt, ctrInt];
 		figTop.addMainOI(ctrsTop);
-		const hole1 = contourCircle(param.L1 / 2, param.L2 / 2, param.D1 / 2));
-		const hole2 = contourCircle(param.L1 / 2 + circleDelta, param.L2 / 2, param.D2 / 2));
+		const hole1 = contourCircle(param.L1 / 2, param.L2 / 2, param.D1 / 2);
+		const hole2 = contourCircle(param.L1 / 2 + circleDelta, param.L2 / 2, param.D2 / 2);
 		figTop.addSecond(hole1);
 		figTop.addSecond(hole2);
 		// figBottom
