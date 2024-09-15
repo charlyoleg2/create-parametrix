@@ -1,7 +1,9 @@
 // {{designName}}.ts
+// a box
 
+// step-1 : import from geometrix
 import type {
-	//tContour,
+	tContour,
 	tOuterInner,
 	tParamDef,
 	tParamVal,
@@ -13,12 +15,13 @@ import type {
 import {
 	contour,
 	contourCircle,
+	ctrRectangle,
 	figure,
 	//degToRad,
 	//radToDeg,
 	//ffix,
 	pNumber,
-	//pCheckbox,
+	pCheckbox,
 	//pDropdown,
 	pSectionSeparator,
 	EExtrude,
@@ -26,21 +29,36 @@ import {
 	initGeom
 } from 'geometrix';
 
+// step-2 : definition of the parameters and more (part-name, svg associated to each parameter, simulation parameters)
 const pDef: tParamDef = {
+	// partName is used in URL. Choose a name without slash, backslash and space.
 	partName: '{{designName}}',
 	params: [
 		//pNumber(name, unit, init, min, max, step)
-		pNumber('H1', 'mm', 40, 1, 4000, 1),
-		pNumber('H2', 'mm', 50, 1, 4000, 1),
-		pNumber('radius', 'mm', 10, 1, 4000, 1),
+		pNumber('L1', 'mm', 120, 1, 400, 1),
+		pNumber('L2', 'mm', 80, 1, 400, 1),
+		pNumber('W1', 'mm', 2, 0.1, 10, 0.1),
+		pNumber('H1', 'mm', 40, 1, 400, 1),
+		pNumber('H2', 'mm', 2, 0.1, 10, 0.1),
+		//pSectionSeparator(name)
+		pSectionSeparator('holes'),
+		//pCheckbox(name, init)
+		pCheckbox('holes', true);
+		pNumber('D1', 'mm', 10, 1, 400, 1),
+		pNumber('D2', 'mm', 10, 1, 400, 1),
 		pSectionSeparator('corners'),
 		pNumber('Rc', 'mm', 10, 0, 400, 1)
 	],
 	paramSvg: {
-		H1: '{{designName}}_face.svg',
-		H2: '{{designName}}_face.svg',
-		radius: '{{designName}}_face.svg',
-		Rc: '{{designName}}_face.svg'
+		L1: '{{designName}}_top.svg',
+		L2: '{{designName}}_top.svg',
+		W1: '{{designName}}_side.svg',
+		H1: '{{designName}}_side.svg',
+		H2: '{{designName}}_side.svg',
+		holes: '{{designName}}_top.svg',
+		D1: '{{designName}}_top.svg',
+		D2: '{{designName}}_top.svg',
+		Rc: '{{designName}}_top.svg'
 	},
 	sim: {
 		tMax: 180,
@@ -49,50 +67,111 @@ const pDef: tParamDef = {
 	}
 };
 
+// step-3 : definition of the function that creates from the parameter-values the figures and construct the 3D
 function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 	const rGeome = initGeom(pDef.partName + suffix);
+	const figBottom = figure();
+	const figTop = figure();
+	const figSide = figure();
 	const figFace = figure();
 	rGeome.logstr += `${rGeome.partName} simTime: ${t}\n`;
 	try {
-		// figFace
-		const face1: tOuterInner = [];
-		const ctrPoleFace = contour(-param.H1 / 2, -param.H2 / 2)
+		// step-4 : some preparation calculation
+		const L1b = param.L1 - 2 * param.W1;
+		const L2b = param.L2 - 2 * param.W1;
+		const Rcb = Math.max(param.Rc - param.W1, 0);
+		const H3b = param.H1 - param.H2;
+		const circleDelta = (param.D1 + param.D2) / 4;
+		// step-5 : checks on the parameter values
+		if (L1b < 0) {
+			throw `err085: L1 ${param.L1} is too small compare to W1 ${param.W1}`;
+		}
+		if (L2b < 0) {
+			throw `err088: L2 ${param.L2} is too small compare to W1 ${param.W1}`;
+		}
+		if (H3b < 0) {
+			throw `err091: H1 ${param.H1} is too small compare to H2 ${param.H2}`;
+		}
+		// step-6 : any logs
+		rGeome.logstr += `box-base surface ${ffix(param.L1 * param.L2)} mm2\n`;
+		rGeome.logstr += `box volume ${ffix(param.L1 * param.L2 * param.H1)} mm3\n`;
+		// step-7 : drawing of the figures
+		// figTop
+		const ctrExt = contour(0, 0)
 			.addCornerRounded(param.Rc)
-			.addSegStrokeA(param.H1 / 2, -param.H2 / 2)
-			.addSegStrokeA(param.H1 / 2, param.H2 / 2)
+			.addSegStrokeA(param.L1, 0)
 			.addCornerRounded(param.Rc)
-			.addSegStrokeA(-param.H1 / 2, param.H2 / 2)
+			.addSegStrokeA(param.L1, param.L2)
+			.addCornerRounded(param.Rc)
+			.addSegStrokeA(0, param.L2)
+			.addCornerRounded(param.Rc)
 			.closeSegStroke();
-		face1.push(ctrPoleFace);
-		face1.push(contourCircle(0, 0, param.radius));
-		figFace.addMainOI(face1);
+		const ctrInt = ctrRectangle(param.W1, param.W1, L1b, L2b, Rcb);
+		const ctrsTop: tOuterInner = [ctrExt, ctrInt];
+		figTop.addMainOI(ctrsTop);
+		const hole1 = contourCircle(param.L1 / 2, param.L2 / 2, param.D1 / 2));
+		const hole2 = contourCircle(param.L1 / 2 + circleDelta, param.L2 / 2, param.D2 / 2));
+		figTop.addSecond(hole1);
+		figTop.addSecond(hole2);
+		// figBottom
+		figBottom.addMainOI([ctrExt, hole1, hole2]);
+		figBottom.addSecond(ctrInt);
+		// figSide
+		function shapeU(hLength: number): tContour {
+			const rCtr = contour(0, 0)
+				.addSegStrokeR(hLength, 0)
+				.addSegStrokeR(0, param.H1)
+				.addSegStrokeR(-param.W1, 0)
+				.addSegStrokeR(0, -H3)
+				.addSegStrokeR(-hLength + 2 * param.W1, 0)
+				.addSegStrokeR(0, H3)
+				.addSegStrokeR(param.W1, 0)
+				.closeSegStroke();
+			return rCtr;
+		}
+		figSide.addMainOI([shapeU(param.L2)]);
+		// figFace
+		figFace.addMainO(shapeU(param.L1));
 		// final figure list
 		rGeome.fig = {
-			face{{DesignName}}: figFace
+			faceBottom: figBottom,
+			faceTop: figTop,
+			faceSide: figSide,
+			faceFace: figFace
 		};
-		// volume
+		// step-8 : recipes of the 3D construction
 		const designName = rGeome.partName;
 		rGeome.vol = {
 			extrudes: [
 				{
-					outName: `subpax_${designName}_top`,
-					face: `${designName}_face{{DesignName}}`,
+					outName: `subpax_${designName}_bottom`,
+					face: `${designName}_faceBottom`,
 					extrudeMethod: EExtrude.eLinearOrtho,
-					length: 10,
+					length: param.H2,
 					rotate: [0, 0, 0],
 					translate: [0, 0, 0]
+				},
+				{
+					outName: `subpax_${designName}_top`,
+					face: `${designName}_faceTop`,
+					extrudeMethod: EExtrude.eLinearOrtho,
+					length: H3,
+					rotate: [0, 0, 0],
+					translate: [0, 0, param.H2]
 				}
 			],
 			volumes: [
 				{
 					outName: `pax_${designName}`,
-					boolMethod: EBVolume.eIdentity,
-					inList: [`subpax_${designName}_top`]
+					boolMethod: EBVolume.eUnion,
+					inList: [`subpax_${designName}_bottom`, `subpax_${designName}_top`]
 				}
 			]
 		};
+		// step-9 : optional sub-design parameter export
 		// sub-design
 		rGeome.sub = {};
+		// step-10 : final log message
 		// finalize
 		rGeome.logstr += '{{designName}} drawn successfully!\n';
 		rGeome.calcErr = false;
@@ -103,11 +182,13 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 	return rGeome;
 }
 
+// step-11 : definiton of the final object that gathers the precedent object and function
 const {{designName}}Def: tPageDef = {
 	pTitle: '{{designName}}',
-	pDescription: 'A simple design for testing exports',
+	pDescription: 'A box',
 	pDef: pDef,
 	pGeom: pGeom
 };
 
+// step-12 : export the final object
 export { {{designName}}Def };
