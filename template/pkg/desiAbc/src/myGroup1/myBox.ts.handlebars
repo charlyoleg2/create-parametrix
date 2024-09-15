@@ -19,7 +19,7 @@ import {
 	figure,
 	//degToRad,
 	//radToDeg,
-	//ffix,
+	ffix,
 	pNumber,
 	pCheckbox,
 	//pDropdown,
@@ -122,9 +122,9 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 				.addSegStrokeR(hLength, 0)
 				.addSegStrokeR(0, param.H1)
 				.addSegStrokeR(-param.W1, 0)
-				.addSegStrokeR(0, -H3)
+				.addSegStrokeR(0, -H3b)
 				.addSegStrokeR(-hLength + 2 * param.W1, 0)
-				.addSegStrokeR(0, H3)
+				.addSegStrokeR(0, H3b)
 				.addSegStrokeR(param.W1, 0)
 				.closeSegStroke();
 			return rCtr;
@@ -155,7 +155,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 					outName: `subpax_${designName}_top`,
 					face: `${designName}_faceTop`,
 					extrudeMethod: EExtrude.eLinearOrtho,
-					length: H3,
+					length: H3b,
 					rotate: [0, 0, 0],
 					translate: [0, 0, param.H2]
 				}
