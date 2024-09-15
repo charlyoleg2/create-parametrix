@@ -81,7 +81,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		const L2b = param.L2 - 2 * param.W1;
 		const Rcb = Math.max(param.Rc - param.W1, 0);
 		const H3b = param.H1 - param.H2;
-		const circleDelta = (param.D1 + param.D2) * 3 / 4;
+		const circleDelta = ((param.D1 + param.D2) * 3) / 4;
 		// step-5 : checks on the parameter values
 		if (L1b < 0) {
 			throw `err085: L1 ${param.L1} is too small compare to W1 ${param.W1}`;
