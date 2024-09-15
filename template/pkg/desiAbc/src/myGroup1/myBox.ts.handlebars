@@ -81,7 +81,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		const L2b = param.L2 - 2 * param.W1;
 		const Rcb = Math.max(param.Rc - param.W1, 0);
 		const H3b = param.H1 - param.H2;
-		const circleDelta = (param.D1 + param.D2) / 4;
+		const circleDelta = (param.D1 + param.D2) * 3 / 4;
 		// step-5 : checks on the parameter values
 		if (L1b < 0) {
 			throw `err085: L1 ${param.L1} is too small compare to W1 ${param.W1}`;
@@ -111,10 +111,16 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 		figTop.addMainOI(ctrsTop);
 		const hole1 = contourCircle(param.L1 / 2, param.L2 / 2, param.D1 / 2);
 		const hole2 = contourCircle(param.L1 / 2 + circleDelta, param.L2 / 2, param.D2 / 2);
-		figTop.addSecond(hole1);
-		figTop.addSecond(hole2);
+		if (param.holes) {
+			figTop.addSecond(hole1);
+			figTop.addSecond(hole2);
+		}
 		// figBottom
-		figBottom.addMainOI([ctrExt, hole1, hole2]);
+		if (param.holes) {
+			figBottom.addMainOI([ctrExt, hole1, hole2]);
+		} else {
+			figBottom.addMainO(ctrExt);
+		}
 		figBottom.addSecond(ctrInt);
 		// figSide
 		function shapeU(hLength: number): tContour {
@@ -125,7 +131,7 @@ function pGeom(t: number, param: tParamVal, suffix = ''): tGeom {
 				.addSegStrokeR(0, -H3b)
 				.addSegStrokeR(-hLength + 2 * param.W1, 0)
 				.addSegStrokeR(0, H3b)
-				.addSegStrokeR(param.W1, 0)
+				.addSegStrokeR(-param.W1, 0)
 				.closeSegStroke();
 			return rCtr;
 		}
