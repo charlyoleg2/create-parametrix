@@ -77,8 +77,8 @@ function styl(str: string): string {
 	return rStr;
 }
 
-//  4: ${styl(`inkscape ${pCfg.libName}/src/myGroup1/svg/src_${pCfg.designName}.svg`)} (optional)
-//  5: ${styl(`vim ${pCfg.libName}/src/myGroup1/${pCfg.designName}.ts`)} (optional)
+//  4: ${styl(`inkscape pkg/${pCfg.libName}/src/myGroup1/svg/src_${pCfg.designName}.svg`)} (optional)
+//  5: ${styl(`vim pkg/${pCfg.libName}/src/myGroup1/${pCfg.designName}.ts`)} (optional)
 const lastMsg = `
 Next steps:
   1: ${styl(`cd ${pCfg.repoName}`)}

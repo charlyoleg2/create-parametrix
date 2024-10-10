@@ -106,8 +106,8 @@ async function generate_boirlerplate(cfg1: tCfg1, preDir: string): Promise<tResp
 	console.log(`generate ${template_file_list.length} files in ${preDir}/${cfg1.repoName}/`);
 	await sleep(100);
 	const rResp: tResp = {
-		inkscape: `inkscape ${cfg1.libName}/src/svg/src_${cfg1.designName}.svg`,
-		vim: `vim ${cfg1.libName}/src/${cfg1.designName}.ts`
+		inkscape: `inkscape pkg/${cfg1.libName}/src/myGroup1/svg/src_${cfg1.designName}.svg`,
+		vim: `vim pkg/${cfg1.libName}/src/myGroup1/${cfg1.designName}.ts`
 	};
 	return rResp;
 }
