@@ -64,7 +64,7 @@
 		"lint": "eslint .",
 		"test:unit": "vitest",
 		"test:unit:once": "vitest --run",
-		"copy_template": "shx cp -r template dist/",
+		"copy_template": "fse copy template dist/template",
 		"cleanCopy_template": "run-s clean:template copy_template",
 		"ci": "run-s check build pretty lint test:unit:once cleanCopy_template",
 		"run": "dist/create-parametrix-cli.js",
@@ -72,9 +72,9 @@
 		"run:diff": "diff -rq tmp tmp2",
 		"run:check": "run-s run:ref run:diff",
 		"cycle": "run-s clean ci run",
-		"clean:template": "shx rm -fr dist/template",
-		"clean:build": "shx rm -fr dist",
-		"clean:output": "shx rm -fr tmp tmp2",
+		"clean:template": "rimraf dist/template",
+		"clean:build": "rimraf dist",
+		"clean:output": "rimraf tmp tmp2",
 		"clean": "run-s clean:build clean:output"
 	},
 	"dependencies": {
@@ -83,6 +83,7 @@
 		"handlebars": "^4.7.8"
 	},
 	"devDependencies": {
+		"@atao60/fse-cli": "^0.1.9",
 		"@eslint/js": "^9.10.0",
 		"@types/eslint__js": "^8.42.3",
 		"@types/node": "^22.7.5",
@@ -90,7 +91,7 @@
 		"eslint-config-prettier": "^9.1.0",
 		"npm-run-all": "^4.1.5",
 		"prettier": "^3.3.3",
-		"shx": "^0.3.4",
+		"rimraf": "^6.0.1",
 		"tsup": "^8.3.0",
 		"typescript": "^5.6.3",
 		"typescript-eslint": "^8.8.1",
