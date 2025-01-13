@@ -43,7 +43,6 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		const fileIn2 = new URL(`./template/${onePathIn}`, import.meta.url);
 		let fileBin = false;
 		let fileStr2 = '';
-		let fileBuffer2 = Buffer.alloc(0);
 		try {
 			await access(fileIn1);
 			try {
@@ -61,7 +60,6 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 			if (err) {
 				if (isFileBinary(fileIn2)) {
 					fileBin = true;
-					fileBuffer2 = await readFile(fileIn2);
 				} else {
 					fileStr2 = await readFile(fileIn2, { encoding: 'utf8' });
 				}
@@ -72,6 +70,7 @@ async function oneFile(onePath: string, cfg2: tCfg2, preDir: string): Promise<vo
 		await createMissingDir(outPath);
 		// write the output file\
 		if (fileBin) {
+			const fileBuffer2 = await readFile(fileIn2);
 			await writeFile(outPath, fileBuffer2);
 		} else {
 			await writeFile(outPath, fileStr2);
