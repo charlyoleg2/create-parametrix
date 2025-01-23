@@ -1,6 +1,6 @@
 {
 	"name": "create-parametrix",
-	"version": "0.1.10",
+	"version": "1.0.0",
 	"description": "The npm-initializer for creating a new parametrix project",
 	"private": false,
 	"repository": {
