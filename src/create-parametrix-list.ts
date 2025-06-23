@@ -13,7 +13,6 @@ const template_file_list = [
 	'pkg/{{libName}}/.prettierrc',
 	'pkg/{{libName}}/tsconfig.json',
 	'pkg/{{libName}}/vitest.config.ts',
-	'pkg/{{libName}}/svgo.config.js',
 	'pkg/{{libName}}/README.md',
 	'pkg/{{libName}}/package.json',
 	'pkg/{{libName}}/src/index.ts',
