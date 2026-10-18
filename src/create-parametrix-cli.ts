@@ -3,12 +3,12 @@
 
 import * as prom from '@clack/prompts';
 import chalk from 'chalk';
-import packag from '../package.json';
+import packag from '../package.json' with { type: 'json' };
 import { setTimeout as sleep } from 'node:timers/promises';
-import { generate_boirlerplate } from './create-parametrix-api';
-//import type { tCfg1, tResp } from './create-parametrix-common';
-import type { tCfg1 } from './create-parametrix-common';
-import { firstLetterCapital, prefixOutputPath } from './create-parametrix-common';
+import { generate_boirlerplate } from './create-parametrix-api.ts';
+//import type { tCfg1, tResp } from './create-parametrix-common.ts';
+import type { tCfg1 } from './create-parametrix-common.ts';
+import { firstLetterCapital, prefixOutputPath } from './create-parametrix-common.ts';
 
 // first message
 const firstMsg =

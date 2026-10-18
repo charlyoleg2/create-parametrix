@@ -2,10 +2,10 @@
 // create-parametrix-ref.ts
 
 import { setTimeout as sleep } from 'node:timers/promises';
-import { generate_boirlerplate } from './create-parametrix-api';
-//import type { tCfg1, tResp } from './create-parametrix-common';
-import type { tCfg1 } from './create-parametrix-common';
-//import { firstLetterCapital, prefixOutputPath } from './create-parametrix-common';
+import { generate_boirlerplate } from './create-parametrix-api.ts';
+//import type { tCfg1, tResp } from './create-parametrix-common.ts';
+import type { tCfg1 } from './create-parametrix-common.ts';
+//import { firstLetterCapital, prefixOutputPath } from './create-parametrix-common.ts';
 
 // get optional preDir from command-line
 const preDir = process.argv[2] || 'tmp2';
