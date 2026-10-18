@@ -31,6 +31,7 @@
 	},
 	"files": [
 		"dist/create-parametrix-cli.js",
+		"dist/*.js",
 		"dist/template/",
 		"!dist/**/*.map",
 		"!dist/**/*.spec.*"
@@ -44,7 +45,6 @@
 		"format": "esm",
 		"target": "esnext",
 		"fixedExtension": false,
-		"splitting": false,
 		"dts": false,
 		"sourcemap": false,
 		"clean": true
