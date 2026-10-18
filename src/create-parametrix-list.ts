@@ -49,7 +49,6 @@ const template_file_list = [
 	'pkg/{{libName}}-ui/.prettierrc',
 	'pkg/{{libName}}-ui/eslint.config.js',
 	'pkg/{{libName}}-ui/tsconfig.json',
-	'pkg/{{libName}}-ui/svelte.config.js',
 	'pkg/{{libName}}-ui/vite.config.ts',
 	'pkg/{{libName}}-ui/README.md',
 	'pkg/{{libName}}-ui/package.json',

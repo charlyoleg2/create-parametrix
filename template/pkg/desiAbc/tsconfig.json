@@ -1,14 +1,15 @@
 {
 	"compilerOptions": {
-		"ignoreDeprecations": "6.0",
+		"target": "esnext",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"rewriteRelativeImportExtensions": true,
 		"declaration": true,
-		"skipLibCheck": true,
 		"sourceMap": true,
+		"skipLibCheck": true,
 		"strict": true,
-		"outDir": "./dist",
-		"module": "NodeNext",
-		"moduleResolution": "NodeNext"
+		"rootDir": "./src",
+		"outDir": "./dist"
 	},
 	"include": ["./src"]
 }
